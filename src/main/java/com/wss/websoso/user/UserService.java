@@ -19,7 +19,6 @@ public class UserService {
         User user = userRepository.findByUserNickname(userNickname)
                 .orElseThrow(() -> new AuthException("해당하는 사용자가 없습니다."));
 
-
         UserAuthentication userAuthentication = new UserAuthentication(user.getUserId(), null, null);
 
         return jwtTokenProvider.generateToken(userAuthentication);
