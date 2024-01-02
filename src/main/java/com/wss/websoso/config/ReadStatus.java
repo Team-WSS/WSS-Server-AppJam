@@ -1,14 +1,14 @@
 package com.wss.websoso.config;
 
 public enum ReadStatus {
-      finish("읽음"),
-      reading("읽는 중"),
-      drop("하차"),
-      wish("읽고 싶음");
+    FINISH("읽음"),
+    READING("읽는 중"),
+    DROP("하차"),
+    WISH("읽고 싶음");
 
-      private String status;
+    private String status;
 
-      ReadStatus(String status) {
-            this.status = status;
-      }
+    ReadStatus(String status) {
+        this.status = status;
+    }
 }
