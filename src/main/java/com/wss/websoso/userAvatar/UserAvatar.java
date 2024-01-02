@@ -1,6 +1,6 @@
-package com.wss.websoso.userCharacter;
+package com.wss.websoso.userAvatar;
 
-import com.wss.websoso.character.Character;
+import com.wss.websoso.avatar.Avatar;
 import com.wss.websoso.user.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -18,24 +18,24 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "user_character")
-public class UserCharacter {
+@Table(name = "user_avatar")
+public class UserAvatar {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long UserCharacterId;
+    private Long UserAvatarId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "character_id")
-    private Character character;
+    @JoinColumn(name = "avatar_id")
+    private Avatar avatar;
 
     @Builder
-    public UserCharacter(User user, Character character) {
+    public UserAvatar(User user, Avatar avatar) {
         this.user = user;
-        this.character = character;
+        this.avatar = avatar;
     }
 }
