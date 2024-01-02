@@ -2,7 +2,14 @@ package com.wss.websoso.userNovelKeyword;
 
 import com.wss.websoso.keyword.Keyword;
 import com.wss.websoso.userNovel.UserNovel;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,19 +21,21 @@ import lombok.NoArgsConstructor;
 @Table(name = "user_novel_keyword")
 public class UserNovelKeyword {
 
-      @Id
-      @ManyToOne(fetch = FetchType.LAZY)
-      @JoinColumn(name = "user_novel_id")
-      private UserNovel userNovel;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long UserNovelKeywordId;
 
-      @Id
-      @ManyToOne(fetch = FetchType.LAZY)
-      @JoinColumn(name = "keyword_id")
-      private Keyword keyword;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_novel_id")
+    private UserNovel userNovel;
 
-      @Builder
-      public UserNovelKeyword(UserNovel userNovel, Keyword keyword) {
-            this.userNovel = userNovel;
-            this.keyword = keyword;
-      }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "keyword_id")
+    private Keyword keyword;
+
+    @Builder
+    public UserNovelKeyword(UserNovel userNovel, Keyword keyword) {
+        this.userNovel = userNovel;
+        this.keyword = keyword;
+    }
 }
