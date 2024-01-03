@@ -1,0 +1,37 @@
+# workflow 이름: CI
+name: CI
+
+# trigger: dev 브랜치에 PR 발생할 때
+on:
+  pull_request:
+    branches: [ "dev" ]
+
+# workflow의 세부 작업 단위 job 정의
+jobs:
+  build:  # job 이름: build
+    runs-on: ubuntu-22.04  # VM의 OS 지정 (EC2와 동일 버전)
+
+    steps: 
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'corretto'
+        java-version: '17'
+        
+    - name: Create application.yml and application-prod.yml
+      run: | 
+          mkdir src/main/resources
+          cd src/main/resources
+          echo "${{ secrets.APPLICATION }}" > ./application.yml
+          echo "${{ secrets.APPLICATION_PROD }}" > ./application-prod.yml
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+      shell: bash
+
+    - name: Build with Gradle
+      run: ./gradlew build -x test
+      shell: bash
