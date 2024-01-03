@@ -1,6 +1,6 @@
 package com.wss.websoso.user;
 
-import com.wss.websoso.config.jwt.JwtTokenProvider;
+import com.wss.websoso.config.jwt.JwtProvider;
 import com.wss.websoso.config.jwt.UserAuthentication;
 import jakarta.security.auth.message.AuthException;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class UserService {
 
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtProvider jwtProvider;
     private final UserRepository userRepository;
 
     public String login(String userNickname) throws AuthException {
@@ -21,6 +21,6 @@ public class UserService {
 
         UserAuthentication userAuthentication = new UserAuthentication(user.getUserId(), null, null);
 
-        return jwtTokenProvider.generateToken(userAuthentication);
+        return jwtProvider.generateToken(userAuthentication);
     }
 }
