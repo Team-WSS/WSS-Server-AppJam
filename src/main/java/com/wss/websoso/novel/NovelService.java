@@ -11,12 +11,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class NovelService {
 
+    public static final int DEFAULT_PAGE_NUMBER = 0;
     private final NovelRepository novelRepository;
 
     public List<Novel> getNovelsByWord(Long lastNovelId, int size, String word) {
-        PageRequest pageRequest = PageRequest.of(0, size);
+        PageRequest pageRequest = PageRequest.of(DEFAULT_PAGE_NUMBER, size);
         Slice<Novel> entitySlice = novelRepository.findByIdLessThanOrderByIdDesc(lastNovelId, pageRequest, word);
-        List<Novel> entityList = entitySlice.getContent();
-        return entityList;
+        return entitySlice.getContent();
     }
 }
