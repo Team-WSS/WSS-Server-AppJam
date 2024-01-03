@@ -98,8 +98,4 @@ public class NovelService {
 
         return userNovel.getUserNovelId();
     }
-
-    public void deleteUserNovel(Long userNovelId) {
-        userNovelRepository.deleteById(userNovelId);
-    }
 }
