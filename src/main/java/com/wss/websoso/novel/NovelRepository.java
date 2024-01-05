@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface NovelRepository extends JpaRepository<Novel, Long> {
-
-    @Query(value = "SELECT n FROM Novel n WHERE n.novelId < ?1 AND n.novelTitle LIKE %?2% ORDER BY n.novelId DESC")
+    @Query(value = "SELECT n FROM Novel n WHERE n.novelId < ?1 AND Function('replace', n.novelTitle, ' ', '') LIKE %?2% ORDER BY n.novelId DESC")
     Slice<Novel> findByIdLessThanOrderByIdDesc(Long lastNovelId, PageRequest pageRequest, String word);
 }

@@ -16,7 +16,7 @@ public class NovelService {
 
     public List<Novel> getNovelsByWord(Long lastNovelId, int size, String word) {
         PageRequest pageRequest = PageRequest.of(DEFAULT_PAGE_NUMBER, size);
-        Slice<Novel> entitySlice = novelRepository.findByIdLessThanOrderByIdDesc(lastNovelId, pageRequest, word);
+        Slice<Novel> entitySlice = novelRepository.findByIdLessThanOrderByIdDesc(lastNovelId, pageRequest, word.replaceAll(" ", ""));
         return entitySlice.getContent();
     }
 }
