@@ -3,6 +3,8 @@ package com.wss.websoso.novel;
 import com.wss.websoso.config.ReadStatus;
 import com.wss.websoso.keyword.Keyword;
 import com.wss.websoso.keyword.KeywordRepository;
+import com.wss.websoso.platform.Platform;
+import com.wss.websoso.platform.PlatformRepository;
 import com.wss.websoso.user.User;
 import com.wss.websoso.user.UserRepository;
 import com.wss.websoso.userNovel.UserNovel;
@@ -28,6 +30,7 @@ public class NovelService {
     private final UserNovelRepository userNovelRepository;
     private final UserNovelKeywordRepository userNovelKeywordRepository;
     private final KeywordRepository keywordRepository;
+    private final PlatformRepository platformRepository;
 
     public List<Novel> getNovelsByWord(Long lastNovelId, int size, String word) {
         PageRequest pageRequest = PageRequest.of(DEFAULT_PAGE_NUMBER, size);
@@ -77,10 +80,23 @@ public class NovelService {
 
         userNovelRepository.save(userNovel);
 
-        if (userNovelCreateRequest.keywordIds() != null) {
-            userNovelCreateRequest.keywordIds().stream()
-                    .map(keywordId -> {
-                        Optional<Keyword> optionalKeyword = keywordRepository.findById(keywordId);
+        if (novel.getPlatforms() != null) {
+            novel.getPlatforms().stream()
+                    .forEach(platform -> {
+                        Platform newPlatform = Platform.builderWithUserNovel()
+                                .platformName(platform.getPlatformName())
+                                .platformUrl(platform.getPlatformUrl())
+                                .userNovel(userNovel)
+                                .builderWithUserNovel();
+
+                        platformRepository.save(newPlatform);
+                    });
+        }
+
+        if (userNovelCreateRequest.keywordNames() != null) {
+            userNovelCreateRequest.keywordNames().stream()
+                    .map(keywordName -> {
+                        Optional<Keyword> optionalKeyword = keywordRepository.findByKeywordName(keywordName);
                         if (optionalKeyword.isEmpty()) {
                             throw new IllegalArgumentException("해당하는 키워드가 없습니다.");
                         }

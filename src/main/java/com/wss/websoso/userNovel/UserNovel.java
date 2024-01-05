@@ -1,6 +1,7 @@
 package com.wss.websoso.userNovel;
 
 import com.wss.websoso.config.ReadStatus;
+import com.wss.websoso.platform.Platform;
 import com.wss.websoso.user.User;
 import com.wss.websoso.userNovelKeyword.UserNovelKeyword;
 import jakarta.persistence.CascadeType;
@@ -18,6 +19,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -45,6 +47,9 @@ public class UserNovel {
 
     @OneToMany(mappedBy = "userNovel", cascade = CascadeType.ALL)
     private List<UserNovelKeyword> userNovelKeywords;
+
+    @OneToMany(mappedBy = "userNovel", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Platform> platforms = new ArrayList<>();
 
     @Builder
     public UserNovel(String userNovelTitle, String userNovelAuthor, String userNovelGenre, String userNovelImg, String userNovelDescription, float userNovelRating, ReadStatus userNovelReadStatus, String userNovelReadStartDate, String userNovelReadEndDate, User user) {

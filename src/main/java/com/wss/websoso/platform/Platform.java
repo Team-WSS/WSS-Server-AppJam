@@ -42,7 +42,7 @@ public class Platform {
         this.novel = novel;
     }
 
-    @Builder
+    @Builder(builderMethodName = "builderWithUserNovel", buildMethodName = "builderWithUserNovel")
     public Platform(String platformName, String platformUrl, UserNovel userNovel) {
         this.platformName = platformName;
         this.platformUrl = platformUrl;
