@@ -45,7 +45,7 @@ public class UserNovel {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "userNovel", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userNovel", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<UserNovelKeyword> userNovelKeywords;
 
     @OneToMany(mappedBy = "userNovel", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
