@@ -7,6 +7,6 @@ public record UserNovelCreateRequest(
         String novelReadStatus,
         String novelReadStartDate,
         String novelReadEndDate,
-        List<Long> keywordIds
+        List<String> keywordNames
 ) {
 }
