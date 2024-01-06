@@ -31,6 +31,7 @@ public class UserNovel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userNovelId;
+    private Long novelId;
     private String userNovelTitle;
     private String userNovelAuthor;
     private String userNovelGenre;
@@ -52,7 +53,8 @@ public class UserNovel {
     private List<Platform> platforms = new ArrayList<>();
 
     @Builder
-    public UserNovel(String userNovelTitle, String userNovelAuthor, String userNovelGenre, String userNovelImg, String userNovelDescription, float userNovelRating, ReadStatus userNovelReadStatus, String userNovelReadStartDate, String userNovelReadEndDate, User user) {
+    public UserNovel(Long novelId, String userNovelTitle, String userNovelAuthor, String userNovelGenre, String userNovelImg, String userNovelDescription, float userNovelRating, ReadStatus userNovelReadStatus, String userNovelReadStartDate, String userNovelReadEndDate, User user) {
+        this.novelId = novelId;
         this.userNovelTitle = userNovelTitle;
         this.userNovelAuthor = userNovelAuthor;
         this.userNovelGenre = userNovelGenre;

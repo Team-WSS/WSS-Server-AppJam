@@ -66,6 +66,7 @@ public class NovelService {
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 작품이 없습니다."));
 
         UserNovel userNovel = UserNovel.builder()
+                .novelId(novelId)
                 .userNovelTitle(novel.getNovelTitle())
                 .userNovelAuthor(novel.getNovelAuthor())
                 .userNovelGenre(novel.getNovelGenre())
