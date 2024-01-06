@@ -87,7 +87,7 @@ public class NovelService {
                                 .platformName(platform.getPlatformName())
                                 .platformUrl(platform.getPlatformUrl())
                                 .userNovel(userNovel)
-                                .builderWithUserNovel();
+                                .buildWithUserNovel();
 
                         platformRepository.save(newPlatform);
                     });
