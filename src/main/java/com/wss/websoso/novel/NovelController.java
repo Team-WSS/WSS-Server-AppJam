@@ -1,11 +1,18 @@
 package com.wss.websoso.novel;
 
+import com.wss.websoso.userNovel.UserNovelCreateRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -25,5 +32,19 @@ public class NovelController {
             @RequestParam int size,
             @RequestParam String word) {
         return novelService.getNovelsByWord(lastNovelId, size, word);
+    }
+
+    @PostMapping("{novelId}")
+    public ResponseEntity<Void> createUserNovel(
+            @PathVariable Long novelId,
+            @RequestBody UserNovelCreateRequest userNovelCreateRequest,
+            Principal principal) {
+        URI location = URI.create("/userNovels/" + novelService.createUserNovel(
+                novelId,
+                Long.valueOf(principal.getName()),
+                userNovelCreateRequest)
+        );
+
+        return ResponseEntity.created(location).build();
     }
 }
