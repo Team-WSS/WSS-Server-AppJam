@@ -37,27 +37,7 @@ public class NovelService {
         Slice<Novel> entitySlice = novelRepository.findByIdLessThanOrderByIdDesc(lastNovelId, pageRequest, word);
         return entitySlice.getContent();
     }
-
-    public NovelGetResponse getNovelByNovelId(Long novelId) {
-        Novel novel = novelRepository.findById(novelId)
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 작품이 없습니다."));
-
-        return new NovelGetResponse(
-                novel.getNovelId(),
-                novel.getNovelTitle(),
-                novel.getNovelAuthor(),
-                novel.getNovelGenre(),
-                novel.getNovelImg(),
-                novel.getNovelDescription(),
-                novel.getPlatforms().stream()
-                        .map(platform -> new PlatformGetResponse(
-                                platform.getPlatformName(),
-                                platform.getPlatformUrl()
-                        ))
-                        .toList()
-        );
-    }
-
+  
     public Long createUserNovel(Long novelId, Long userId, UserNovelCreateRequest userNovelCreateRequest) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 사용자가 없습니다."));
