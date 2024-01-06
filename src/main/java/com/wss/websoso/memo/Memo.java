@@ -2,6 +2,7 @@ package com.wss.websoso.memo;
 
 import com.wss.websoso.config.BaseTimeEntity;
 import com.wss.websoso.userNovel.UserNovel;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -24,6 +25,7 @@ public class Memo extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memoId;
+    @Column(length = 2000)
     private String memoContent;
 
     @ManyToOne(fetch = FetchType.LAZY)

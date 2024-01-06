@@ -1,7 +1,9 @@
 package com.wss.websoso.userNovel;
 
 import com.wss.websoso.config.ReadStatus;
+import com.wss.websoso.memo.Memo;
 import com.wss.websoso.user.User;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -9,7 +11,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,8 +43,13 @@ public class UserNovel {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(mappedBy = "userNovel", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Memo> memos = new ArrayList<>();
+
     @Builder
-    public UserNovel(String userNovelTitle, String userNovelAuthor, String userNovelGenre, String userNovelImg, String userNovelDescription, float userNovelRating, ReadStatus userNovelReadStatus, String userNovelReadStartDate, String userNovelReadEndDate, User user) {
+    public UserNovel(String userNovelTitle, String userNovelAuthor, String userNovelGenre, String userNovelImg,
+                     String userNovelDescription, float userNovelRating, ReadStatus userNovelReadStatus,
+                     String userNovelReadStartDate, String userNovelReadEndDate, User user) {
         this.userNovelTitle = userNovelTitle;
         this.userNovelAuthor = userNovelAuthor;
         this.userNovelGenre = userNovelGenre;
