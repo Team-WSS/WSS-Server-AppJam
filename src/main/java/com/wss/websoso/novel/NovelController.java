@@ -27,7 +27,7 @@ public class NovelController {
     word에 해당하는 소설이 없으면 빈 리스트를 반환한다.
      */
     @GetMapping
-    public List<Novel> getNovelsByWord(
+    public List<NovelGetResponse> getNovelsByWord(
             @RequestParam Long lastNovelId,
             @RequestParam int size,
             @RequestParam String word) {
