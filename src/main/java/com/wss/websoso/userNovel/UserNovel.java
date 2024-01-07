@@ -1,5 +1,7 @@
 package com.wss.websoso.userNovel;
 
+import static jakarta.persistence.EnumType.STRING;
+
 import com.wss.websoso.config.ReadStatus;
 import com.wss.websoso.platform.Platform;
 import com.wss.websoso.user.User;
@@ -7,6 +9,7 @@ import com.wss.websoso.userNovelKeyword.UserNovelKeyword;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -54,7 +57,7 @@ public class UserNovel {
     @Column(name = "user_novel_rating", nullable = false)
     private float userNovelRating;
 
-    @Column(name = "user_novel_read_status", nullable = false)
+    @Enumerated(value = STRING)
     private ReadStatus userNovelReadStatus;
 
     @Column(name = "user_novel_read_start_date")
