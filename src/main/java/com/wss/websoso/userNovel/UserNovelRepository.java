@@ -50,4 +50,6 @@ public interface UserNovelRepository extends JpaRepository<UserNovel, Long> {
             + "un.user.userId = ?1 AND "
             + "un.userNovelReadStatus = ?2")
     Long countByUserNovelReadStatus(Long userId, ReadStatus readStatus);
+
+    UserNovel findByUserNovelId(Long userNovelId);
 }

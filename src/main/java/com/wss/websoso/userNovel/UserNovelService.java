@@ -7,6 +7,7 @@ import com.wss.websoso.platform.Platform;
 import com.wss.websoso.platform.PlatformRepository;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
@@ -64,11 +65,21 @@ public class UserNovelService {
         }
     }
 
-    public UserNovelInfosResponse getUserNovelInfos(Long userNovelId) {
+    public UserNovelInfosResponse getUserNovelInfos(Long userId, Long userNovelId) {
+        Optional<UserNovel> userNovelForAuthorization = userNovelRepository.findById(userNovelId);
+        if (userNovelForAuthorization.isEmpty()) {
+            throw new RuntimeException("해당하는 userNovel이 없습니다.");
+        }
+
+        Long userIdForAuthorization = userNovelForAuthorization.get().getUser().getUserId();
+        if (!Objects.equals(userIdForAuthorization, userId)) {
+            throw new RuntimeException("잘못된 접근입니다.(인가X)");
+        }
+
         List<Memo> memos = memoRepository.findByUserNovelId(userNovelId);
         List<Platform> platforms = platformRepository.findByUserNovelId(userNovelId);
-        UserNovel userNovel = userNovelRepository.findById(userNovelId)
-                .orElseThrow(() -> new RuntimeException(userNovelId + "는 존재하지 않습니다."));
+        UserNovel userNovel = userNovelRepository.findByUserNovelId(userNovelId);
+
         return UserNovelInfosResponse.of(memos, userNovel, platforms);
     }
 }
