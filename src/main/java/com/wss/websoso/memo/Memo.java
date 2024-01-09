@@ -18,18 +18,20 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Table(name = "memo")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "memo")
 public class Memo extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "memo_id", nullable = false)
     private Long memoId;
-    @Column(length = 2000)
+
+    @Column(name = "memo_content", length = 2000, nullable = false)
     private String memoContent;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_novel_id")
+    @JoinColumn(name = "user_novel_id", nullable = false)
     private UserNovel userNovel;
 
     @Builder
