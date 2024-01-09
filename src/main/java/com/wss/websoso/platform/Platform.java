@@ -2,6 +2,7 @@ package com.wss.websoso.platform;
 
 import com.wss.websoso.novel.Novel;
 import com.wss.websoso.userNovel.UserNovel;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -23,8 +24,13 @@ public class Platform {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "platform_id", nullable = false)
     private Long platformId;
+
+    @Column(name = "platform_name", nullable = false)
     private String platformName;
+
+    @Column(name = "platform_url", nullable = false)
     private String platformUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,7 +38,7 @@ public class Platform {
     private Novel novel;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_novel_id")
+    @JoinColumn(name = "user_novel_id", nullable = false)
     private UserNovel userNovel;
 
     @Builder
