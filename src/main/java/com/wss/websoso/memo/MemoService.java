@@ -42,6 +42,20 @@ public class MemoService {
     }
 
     @Transactional
+    public void deleteMemo(Long userId, Long memoId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 사용자가 없습니다."));
+
+        Memo memo = memoRepository.findById(memoId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 메모입니다."));
+
+        if (memo.getUserNovel().getUser() != user) {
+            throw new IllegalArgumentException("사용자의 메모가 아닙니다.");
+        }
+        memoRepository.delete(memo);
+    }
+  
+    @Transactional
     public void editMemo(Long userId, Long memoId, MemoUpdateRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 사용자가 없습니다."));
