@@ -34,6 +34,11 @@ public class NovelController {
         return novelService.getNovelsByWord(lastNovelId, size, word);
     }
 
+    @GetMapping("{novelId}")
+    public ResponseEntity getNovelByNovelId(@PathVariable Long novelId, Principal principal) {
+        return novelService.getNovelByNovelId(novelId, Long.valueOf(principal.getName()));
+    }
+
     @PostMapping("{novelId}")
     public ResponseEntity<Void> createUserNovel(
             @PathVariable Long novelId,

@@ -3,6 +3,7 @@ package com.wss.websoso.userNovel;
 import static jakarta.persistence.EnumType.STRING;
 
 import com.wss.websoso.config.ReadStatus;
+import com.wss.websoso.memo.Memo;
 import com.wss.websoso.platform.Platform;
 import com.wss.websoso.user.User;
 import com.wss.websoso.userNovelKeyword.UserNovelKeyword;
@@ -75,6 +76,9 @@ public class UserNovel {
 
     @OneToMany(mappedBy = "userNovel", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Platform> platforms = new ArrayList<>();
+
+    @OneToMany(mappedBy = "userNovel", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Memo> memos = new ArrayList<>();
 
     @Builder
     public UserNovel(Long novelId, String userNovelTitle, String userNovelAuthor, String userNovelGenre,
