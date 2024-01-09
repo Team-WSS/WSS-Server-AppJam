@@ -37,4 +37,8 @@ public class Memo extends BaseTimeEntity {
         this.memoContent = memoContent;
         this.userNovel = userNovel;
     }
+
+    public void updateContent(String memoContent) {
+        this.memoContent = memoContent;
+    }
 }
