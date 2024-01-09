@@ -11,6 +11,7 @@ public record UserNovelsResponse(
         List<UserNovelResponse> userNovelList = userNovels.stream()
                 .map(userNovel -> new UserNovelResponse(
                         userNovel.getUserNovelId(),
+                        userNovel.getUserNovelTitle(),
                         userNovel.getUserNovelAuthor(),
                         userNovel.getUserNovelGenre(),
                         userNovel.getUserNovelImg(),
