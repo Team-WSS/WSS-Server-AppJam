@@ -12,29 +12,38 @@ public interface UserNovelRepository extends JpaRepository<UserNovel, Long> {
 
     // ALL, NEWEST
     @Query(value = "SELECT un FROM UserNovel un WHERE "
-            + "un.userNovelId < ?1 "
+            + "un.user.userId = ?1 AND "
+            + "un.userNovelId < ?2 "
             + "ORDER BY un.userNovelId DESC")
-    Slice<UserNovel> findUserNovelsByNewest(Long lastUserNovelId, PageRequest pageRequest);
+    Slice<UserNovel> findUserNovelsByNewest(Long userId, Long lastUserNovelId, PageRequest pageRequest);
 
     // ALL, OLDEST
     @Query(value = "SELECT un FROM UserNovel un WHERE "
-            + "un.userNovelId > ?1")
-    Slice<UserNovel> findUserNovelsByOldest(Long lastUserNovelId, PageRequest pageRequest);
+            + "un.user.userId = ?1 AND "
+            + "un.userNovelId > ?2")
+    Slice<UserNovel> findUserNovelsByOldest(Long userId, Long lastUserNovelId, PageRequest pageRequest);
 
     // [FINISH, READING, DROP, WISH], NEWEST
-    @Query(value = "SELECT un FROM UserNovel un "
-            + "WHERE un.userNovelReadStatus = ?1 AND un.userNovelId < ?2 "
+    @Query(value = "SELECT un FROM UserNovel un WHERE "
+            + "un.user.userId = ?1 AND "
+            + "un.userNovelReadStatus = ?2 AND un.userNovelId < ?3 "
             + "ORDER BY un.userNovelId DESC")
-    Slice<UserNovel> findUserNovelsByReadStatusAndNewest(ReadStatus readStatus, Long lastUserNovelId,
-                                                         PageRequest pageRequest);
+    Slice<UserNovel> findUserNovelsByReadStatusAndNewest(Long userId, ReadStatus readStatus,
+                                                         Long lastUserNovelId, PageRequest pageRequest);
 
     // [FINISH, READING, DROP, WISH], OLDEST
-    @Query(value = "SELECT un FROM UserNovel un "
-            + "WHERE un.userNovelReadStatus = ?1 AND un.userNovelId > ?2")
-    Slice<UserNovel> findUserNovelsByReadStatusAndOldest(ReadStatus readStatus, Long lastUserNovelId,
-                                                         PageRequest pageRequest);
+    @Query(value = "SELECT un FROM UserNovel un WHERE "
+            + "un.user.userId = ?1 AND "
+            + "un.userNovelReadStatus = ?2 AND un.userNovelId > ?3 ")
+    Slice<UserNovel> findUserNovelsByReadStatusAndOldest(Long userId, ReadStatus readStatus,
+                                                         Long lastUserNovelId, PageRequest pageRequest);
 
-    long count();
+    @Query(value = "SELECT COUNT(un) FROM UserNovel un WHERE "
+            + "un.user.userId = ?1")
+    long countByUserId(Long userId);
 
-    Long countByUserNovelReadStatus(ReadStatus readStatus);
+    @Query(value = "SELECT COUNT(un) FROM UserNovel un WHERE "
+            + "un.user.userId = ?1 AND "
+            + "un.userNovelReadStatus = ?2")
+    Long countByUserNovelReadStatus(Long userId, ReadStatus readStatus);
 }

@@ -18,19 +18,19 @@ public class UserNovelService {
     private final UserNovelRepository userNovelRepository;
 
     // ALL
-    public UserNovelsResponse getUserNovels(Long lastUserNovelId, int size, String sortType) {
+    public UserNovelsResponse getUserNovels(Long userId, Long lastUserNovelId, int size, String sortType) {
         PageRequest pageRequest = PageRequest.of(DEFAULT_PAGE_NUMBER, size);
-        long userNovelCount = userNovelRepository.count();
+        long userNovelCount = userNovelRepository.countByUserId(userId);
 
         if (Objects.equals(sortType, "NEWEST")) {
             Slice<UserNovel> entitySlice = userNovelRepository.
-                    findUserNovelsByNewest(lastUserNovelId, pageRequest);
+                    findUserNovelsByNewest(userId, lastUserNovelId, pageRequest);
             List<UserNovel> userNovels = entitySlice.getContent();
 
             return UserNovelsResponse.of(userNovelCount, userNovels);
         } else {      // OLDEST
             Slice<UserNovel> entitySlice = userNovelRepository.
-                    findUserNovelsByOldest(lastUserNovelId, pageRequest);
+                    findUserNovelsByOldest(userId, lastUserNovelId, pageRequest);
             List<UserNovel> userNovels = entitySlice.getContent();
 
             return UserNovelsResponse.of(userNovelCount, userNovels);
@@ -38,19 +38,20 @@ public class UserNovelService {
     }
 
     // [FINISH, READING, DROP, WISH]
-    public UserNovelsResponse getUserNovels(ReadStatus readStatus, Long lastUserNovelId, int size, String sortType) {
+    public UserNovelsResponse getUserNovels(Long userId, ReadStatus readStatus,
+                                            Long lastUserNovelId, int size, String sortType) {
         PageRequest pageRequest = PageRequest.of(DEFAULT_PAGE_NUMBER, size);
-        long userNovelCount = userNovelRepository.countByUserNovelReadStatus(readStatus);
+        long userNovelCount = userNovelRepository.countByUserNovelReadStatus(userId, readStatus);
 
         if (Objects.equals(sortType, "NEWEST")) {
             Slice<UserNovel> entitySlice = userNovelRepository.
-                    findUserNovelsByReadStatusAndNewest(readStatus, lastUserNovelId, pageRequest);
+                    findUserNovelsByReadStatusAndNewest(userId, readStatus, lastUserNovelId, pageRequest);
             List<UserNovel> userNovels = entitySlice.getContent();
 
             return UserNovelsResponse.of(userNovelCount, userNovels);
         } else {      // OLDEST
             Slice<UserNovel> entitySlice = userNovelRepository.
-                    findUserNovelsByReadStatusAndOldest(readStatus, lastUserNovelId, pageRequest);
+                    findUserNovelsByReadStatusAndOldest(userId, readStatus, lastUserNovelId, pageRequest);
             List<UserNovel> userNovels = entitySlice.getContent();
 
             return UserNovelsResponse.of(userNovelCount, userNovels);
