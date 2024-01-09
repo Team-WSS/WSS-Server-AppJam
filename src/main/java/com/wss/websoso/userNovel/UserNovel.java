@@ -1,12 +1,16 @@
 package com.wss.websoso.userNovel;
 
+import static jakarta.persistence.EnumType.STRING;
+
 import com.wss.websoso.config.ReadStatus;
 import com.wss.websoso.memo.Memo;
 import com.wss.websoso.platform.Platform;
 import com.wss.websoso.user.User;
 import com.wss.websoso.userNovelKeyword.UserNovelKeyword;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,20 +34,41 @@ public class UserNovel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_novel_id")
     private Long userNovelId;
+
+    @Column(name = "novel_id")
     private Long novelId;
+
+    @Column(name = "user_novel_title", nullable = false)
     private String userNovelTitle;
+
+    @Column(name = "user_novel_author", nullable = false)
     private String userNovelAuthor;
+
+    @Column(name = "user_novel_genre", nullable = false)
     private String userNovelGenre;
+
+    @Column(name = "user_novel_img", nullable = false)
     private String userNovelImg;
+
+    @Column(name = "user_novel_description", nullable = false)
     private String userNovelDescription;
+
+    @Column(name = "user_novel_rating", nullable = false)
     private float userNovelRating;
+
+    @Enumerated(value = STRING)
     private ReadStatus userNovelReadStatus;
+
+    @Column(name = "user_novel_read_start_date")
     private String userNovelReadStartDate;
+
+    @Column(name = "user_novel_read_end_date")
     private String userNovelReadEndDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @OneToMany(mappedBy = "userNovel", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
