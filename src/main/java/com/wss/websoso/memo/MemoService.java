@@ -4,7 +4,11 @@ import com.wss.websoso.user.User;
 import com.wss.websoso.user.UserRepository;
 import com.wss.websoso.userNovel.UserNovel;
 import com.wss.websoso.userNovel.UserNovelRepository;
+import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class MemoService {
+
+    public static final int DEFAULT_PAGE_NUMBER = 0;
 
     private final MemoRepository memoRepository;
     private final UserRepository userRepository;
@@ -25,7 +31,7 @@ public class MemoService {
         UserNovel userNovel = userNovelRepository.findById(userNovelId)
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 작품이 서재에 없습니다."));
 
-        if (userNovel.getUser() != user){
+        if (userNovel.getUser() != user) {
             throw new IllegalArgumentException("내 서재의 작품이 아닙니다.");
         }
 
@@ -38,5 +44,19 @@ public class MemoService {
                 .userNovel(userNovel)
                 .build());
         return memo.getMemoId().toString();
+    }
+
+    public MemosGetResponse getMemos(Long userId, Long lastMemoId, int size, String sortType) {
+        PageRequest pageRequest = PageRequest.of(DEFAULT_PAGE_NUMBER, size);
+        long memoCount = memoRepository.countByUserId(userId);
+        if (Objects.equals(sortType, "NEWEST")) {
+            Slice<Memo> entitySlice = memoRepository.findMemosByNewest(userId, lastMemoId, pageRequest);
+            List<Memo> memos = entitySlice.getContent();
+            return MemosGetResponse.of(memoCount, memos);
+        } else {
+            Slice<Memo> entitySlice = memoRepository.findMemosByOldest(userId, lastMemoId, pageRequest);
+            List<Memo> memos = entitySlice.getContent();
+            return MemosGetResponse.of(memoCount, memos);
+        }
     }
 }
