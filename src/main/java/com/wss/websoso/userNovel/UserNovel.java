@@ -1,6 +1,7 @@
 package com.wss.websoso.userNovel;
 
 import com.wss.websoso.config.ReadStatus;
+import com.wss.websoso.memo.Memo;
 import com.wss.websoso.platform.Platform;
 import com.wss.websoso.user.User;
 import com.wss.websoso.userNovelKeyword.UserNovelKeyword;
@@ -14,13 +15,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -52,8 +52,14 @@ public class UserNovel {
     @OneToMany(mappedBy = "userNovel", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Platform> platforms = new ArrayList<>();
 
+    @OneToMany(mappedBy = "userNovel", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Memo> memos = new ArrayList<>();
+
     @Builder
-    public UserNovel(Long novelId, String userNovelTitle, String userNovelAuthor, String userNovelGenre, String userNovelImg, String userNovelDescription, float userNovelRating, ReadStatus userNovelReadStatus, String userNovelReadStartDate, String userNovelReadEndDate, User user) {
+    public UserNovel(Long novelId, String userNovelTitle, String userNovelAuthor, String userNovelGenre,
+                     String userNovelImg, String userNovelDescription, float userNovelRating,
+                     ReadStatus userNovelReadStatus, String userNovelReadStartDate, String userNovelReadEndDate,
+                     User user) {
         this.novelId = novelId;
         this.userNovelTitle = userNovelTitle;
         this.userNovelAuthor = userNovelAuthor;
