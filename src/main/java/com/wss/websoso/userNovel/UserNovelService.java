@@ -65,7 +65,7 @@ public class UserNovelService {
         }
     }
 
-    public UserNovelMemoAndInfoGetResponse getUserNovelInfos(Long userId, Long userNovelId) {
+    public UserNovelMemoAndInfoGetResponse getUserNovelMemoAndInfo(Long userId, Long userNovelId) {
         Optional<UserNovel> userNovelForAuthorization = userNovelRepository.findById(userNovelId);
         if (userNovelForAuthorization.isEmpty()) {
             throw new RuntimeException("해당하는 userNovel이 없습니다.");

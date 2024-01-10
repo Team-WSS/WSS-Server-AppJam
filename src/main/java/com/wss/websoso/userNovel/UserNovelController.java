@@ -36,8 +36,9 @@ public class UserNovelController {
     }
 
     @GetMapping("/{userNovelId}")
-    public UserNovelMemoAndInfoGetResponse getUserNovelInfos(@PathVariable Long userNovelId, Principal principal) {
+    public UserNovelMemoAndInfoGetResponse getUserNovelMemoAndInfo(@PathVariable Long userNovelId,
+                                                                   Principal principal) {
         Long userId = Long.valueOf(principal.getName());
-        return userNovelService.getUserNovelInfos(userId, userNovelId);
+        return userNovelService.getUserNovelMemoAndInfo(userId, userNovelId);
     }
 }
