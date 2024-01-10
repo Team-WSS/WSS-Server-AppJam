@@ -10,6 +10,7 @@ import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+@Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @Getter
@@ -22,4 +23,3 @@ public abstract class BaseTimeEntity {
     public void onPrePersist() {
         this.createdDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd a HH:mm"));
     }
-}
