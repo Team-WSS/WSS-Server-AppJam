@@ -1,6 +1,6 @@
 package com.wss.websoso.userNovel;
 
-public record UserNovelPlatformsResponse(
+public record UserNovelPlatformsGetResponse(
         String platformName,
         String platformUrl
 ) {

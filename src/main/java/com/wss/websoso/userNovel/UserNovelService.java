@@ -65,7 +65,7 @@ public class UserNovelService {
         }
     }
 
-    public UserNovelInfosResponse getUserNovelInfos(Long userId, Long userNovelId) {
+    public UserNovelMemoAndInfoGetResponse getUserNovelInfos(Long userId, Long userNovelId) {
         Optional<UserNovel> userNovelForAuthorization = userNovelRepository.findById(userNovelId);
         if (userNovelForAuthorization.isEmpty()) {
             throw new RuntimeException("해당하는 userNovel이 없습니다.");
@@ -80,6 +80,6 @@ public class UserNovelService {
         List<Platform> platforms = platformRepository.findByUserNovelId(userNovelId);
         UserNovel userNovel = userNovelRepository.findByUserNovelId(userNovelId);
 
-        return UserNovelInfosResponse.of(memos, userNovel, platforms);
+        return UserNovelMemoAndInfoGetResponse.of(memos, userNovel, platforms);
     }
 }

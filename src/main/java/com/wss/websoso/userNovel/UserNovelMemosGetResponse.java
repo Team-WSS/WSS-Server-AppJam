@@ -1,6 +1,6 @@
 package com.wss.websoso.userNovel;
 
-public record UserNovelMemoResponse(
+public record UserNovelMemosGetResponse(
         Long memoId,
         String memoContent,
         String createdDate
