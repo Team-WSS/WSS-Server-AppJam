@@ -1,14 +1,17 @@
 package com.wss.websoso.config;
 
+import jakarta.persistence.Column;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum ReadStatus {
-    FINISH("읽음"),
-    READING("읽는 중"),
-    DROP("하차"),
-    WISH("읽고 싶음");
+    FINISH("FINISH"),
+    READING("READING"),
+    DROP("DROP"),
+    WISH("WISH");
 
-    private String status;
-
-    ReadStatus(String status) {
-        this.status = status;
-    }
+    @Column(name = "user_novel_read_status", nullable = false)
+    private final String status;
 }
