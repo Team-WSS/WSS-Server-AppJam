@@ -4,9 +4,9 @@ import com.wss.websoso.user.User;
 import com.wss.websoso.user.UserRepository;
 import com.wss.websoso.userNovel.UserNovel;
 import com.wss.websoso.userNovel.UserNovelRepository;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
@@ -59,6 +59,7 @@ public class MemoService {
             List<Memo> memos = entitySlice.getContent();
             return MemosGetResponse.of(memoCount, memos);
         }
+    }
 
     @Transactional
     public void deleteMemo(Long userId, Long memoId) {
@@ -73,7 +74,7 @@ public class MemoService {
         }
         memoRepository.delete(memo);
     }
-  
+
     @Transactional
     public void editMemo(Long userId, Long memoId, MemoUpdateRequest request) {
         User user = userRepository.findById(userId)
