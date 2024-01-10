@@ -2,6 +2,7 @@ package com.wss.websoso.userAvatar;
 
 import com.wss.websoso.avatar.Avatar;
 import com.wss.websoso.user.User;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -23,14 +24,15 @@ public class UserAvatar {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long UserAvatarId;
+    @Column(name = "user_avatar_id", nullable = false)
+    private Long userAvatarId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "avatar_id")
+    @JoinColumn(name = "avatar_id", nullable = false)
     private Avatar avatar;
 
     @Builder
