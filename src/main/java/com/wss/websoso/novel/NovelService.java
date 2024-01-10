@@ -35,10 +35,18 @@ public class NovelService {
     private final KeywordRepository keywordRepository;
     private final PlatformRepository platformRepository;
 
-    public List<Novel> getNovelsByWord(Long lastNovelId, int size, String word) {
+    public List<NovelGetResponse> getNovelsByWord(Long lastNovelId, int size, String word) {
         PageRequest pageRequest = PageRequest.of(DEFAULT_PAGE_NUMBER, size);
         Slice<Novel> entitySlice = novelRepository.findByIdLessThanOrderByIdDesc(lastNovelId, pageRequest, word);
-        return entitySlice.getContent();
+        return entitySlice.getContent().stream()
+                .map(novel -> new NovelGetResponse(
+                        novel.getNovelId(),
+                        novel.getNovelTitle(),
+                        novel.getNovelAuthor(),
+                        novel.getNovelGenre(),
+                        novel.getNovelImg()
+                ))
+                .toList();
     }
 
     public ResponseEntity<?> getNovelByNovelId(Long novelId, Long userId) {
@@ -74,7 +82,7 @@ public class NovelService {
                             .toList()
             ));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.ok(new NovelGetResponse(
+            return ResponseEntity.ok(new NovelDetailGetResponse(
                     novel.getNovelId(),
                     novel.getNovelTitle(),
                     novel.getNovelAuthor(),
