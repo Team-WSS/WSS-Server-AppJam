@@ -1,6 +1,7 @@
 package com.wss.websoso.userNovel;
 
 import com.wss.websoso.config.ReadStatus;
+import com.wss.websoso.genreBadge.GenreBadge;
 import com.wss.websoso.memo.Memo;
 import com.wss.websoso.platform.Platform;
 import java.util.List;
@@ -13,10 +14,12 @@ public record UserNovelMemoAndInfoGetResponse(
         String userNovelReadEndDate,
         String userNovelDescription,
         String userNovelGenre,
+        String userNovelGenreBadgeImg,
         List<UserNovelPlatformsGetResponse> platformList
 ) {
 
-    public static UserNovelMemoAndInfoGetResponse of(List<Memo> memos, UserNovel userNovel, List<Platform> platforms) {
+    public static UserNovelMemoAndInfoGetResponse of(List<Memo> memos, UserNovel userNovel,
+                                                     List<Platform> platforms, GenreBadge genreBadge) {
         List<UserNovelMemosGetResponse> memoList = memos.stream()
                 .map(memo -> new UserNovelMemosGetResponse(
                         memo.getMemoId(),
@@ -38,6 +41,7 @@ public record UserNovelMemoAndInfoGetResponse(
                 userNovel.getUserNovelReadEndDate(),
                 userNovel.getUserNovelDescription(),
                 userNovel.getUserNovelGenre(),
+                genreBadge.getGenreBadgeImg(),
                 platformList
         );
     }

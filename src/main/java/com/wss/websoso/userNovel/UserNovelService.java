@@ -1,6 +1,8 @@
 package com.wss.websoso.userNovel;
 
 import com.wss.websoso.config.ReadStatus;
+import com.wss.websoso.genreBadge.GenreBadge;
+import com.wss.websoso.genreBadge.GenreBadgeRepository;
 import com.wss.websoso.memo.Memo;
 import com.wss.websoso.memo.MemoRepository;
 import com.wss.websoso.novel.Novel;
@@ -9,14 +11,13 @@ import com.wss.websoso.platform.Platform;
 import com.wss.websoso.platform.PlatformRepository;
 import com.wss.websoso.user.User;
 import com.wss.websoso.user.UserRepository;
+import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +30,7 @@ public class UserNovelService {
     private final PlatformRepository platformRepository;
     private final UserRepository userRepository;
     private final NovelRepository novelRepository;
+    private final GenreBadgeRepository genreBadgeRepository;
 
     @Transactional
     public Long createUserNovel(Long novelId, Long userId, UserNovelCreateRequest userNovelCreateRequest) {
@@ -124,7 +126,8 @@ public class UserNovelService {
         List<Memo> memos = memoRepository.findByUserNovelId(userNovelId);
         List<Platform> platforms = platformRepository.findByUserNovelId(userNovelId);
         UserNovel userNovel = userNovelRepository.findByUserNovelId(userNovelId);
+        GenreBadge genreBadge = genreBadgeRepository.findByGenreBadgeName(userNovel.getUserNovelGenre());
 
-        return UserNovelMemoAndInfoGetResponse.of(memos, userNovel, platforms);
+        return UserNovelMemoAndInfoGetResponse.of(memos, userNovel, platforms, genreBadge);
     }
 }
