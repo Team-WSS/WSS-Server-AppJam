@@ -1,11 +1,17 @@
 package com.wss.websoso.avatar;
 
+import com.wss.websoso.avatarLine.AvatarLine;
+import com.wss.websoso.userAvatar.UserAvatar;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.List;
 import lombok.Getter;
 
 @Entity
@@ -41,4 +47,10 @@ public class Avatar {
 
     @Column(name = "avatar_unacquired_condition", nullable = false)
     private String avatarUnacquiredCondition;
+
+    @OneToMany(mappedBy = "avatar", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<AvatarLine> avatarLines;
+
+    @OneToMany(mappedBy = "avatar", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<UserAvatar> userAvatars;
 }
