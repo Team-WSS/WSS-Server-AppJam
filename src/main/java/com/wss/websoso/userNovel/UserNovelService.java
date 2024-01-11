@@ -11,13 +11,16 @@ import com.wss.websoso.platform.Platform;
 import com.wss.websoso.platform.PlatformRepository;
 import com.wss.websoso.user.User;
 import com.wss.websoso.user.UserRepository;
-import java.util.List;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -129,6 +132,39 @@ public class UserNovelService {
         GenreBadge genreBadge = genreBadgeRepository.findByGenreBadgeName(userNovel.getUserNovelGenre());
 
         return UserNovelMemoAndInfoGetResponse.of(memos, userNovel, platforms, genreBadge);
+    }
+
+    public sosoPicksGetResponse getSosoPicks() {
+        Long lastUserNovelId;
+        try {
+            lastUserNovelId = userNovelRepository.findByMaxUserNovelId()
+                    .orElseThrow(() -> new RuntimeException("유저가 등록한 서재 작품이 없습니다."));
+        } catch (Exception e) {
+            return new sosoPicksGetResponse(new ArrayList<>());
+        }
+        List<Novel> recentNovels = new ArrayList<>();
+        int count = 0;
+        while (count < 10 && lastUserNovelId >= 0) {
+            Optional<UserNovel> userNovel = userNovelRepository.findById(lastUserNovelId);
+
+            if (!userNovel.isEmpty()) {
+                Novel novel = novelRepository.findById(userNovel.get().getNovelId())
+                        .orElseThrow(() -> new RuntimeException("해당하는 작품이 없습니다."));
+
+                if (!recentNovels.contains(novel)) {
+                    recentNovels.add(novel);
+                    count++;
+                }
+            }
+
+            lastUserNovelId--;
+        }
+
+        List<sosoPickGetResponse> sosoPicks = recentNovels.stream()
+                .map(novel -> sosoPickGetResponse.of(novel, userNovelRepository.countUserNovelsByNovelId(novel.getNovelId())))
+                .toList();
+
+        return new sosoPicksGetResponse(sosoPicks);
     }
 
     @Transactional

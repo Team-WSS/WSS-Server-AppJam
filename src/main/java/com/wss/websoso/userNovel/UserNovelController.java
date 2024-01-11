@@ -70,6 +70,14 @@ public class UserNovelController {
                 .body(userNovelService.getUserNovelMemoAndInfo(userId, userNovelId));
     }
 
+    @GetMapping("/soso-picks")
+    public ResponseEntity<sosoPicksGetResponse> getSosoPicks() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userNovelService.getSosoPicks());
+
+    }
+  
     @DeleteMapping("/{userNovelId}")
     public ResponseEntity<Void> deleteUserNovel(@PathVariable Long userNovelId,
                                                 Principal principal) {
