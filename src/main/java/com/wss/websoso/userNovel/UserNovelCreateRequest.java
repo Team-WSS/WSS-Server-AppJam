@@ -1,12 +1,9 @@
 package com.wss.websoso.userNovel;
 
-import java.util.List;
-
 public record UserNovelCreateRequest(
-        float novelRating,
-        String novelReadStatus,
-        String novelReadStartDate,
-        String novelReadEndDate,
-        List<String> keywordNames
+        float userNovelRating,
+        String userNovelReadStatus,
+        String userNovelReadStartDate,
+        String userNovelReadEndDate
 ) {
 }

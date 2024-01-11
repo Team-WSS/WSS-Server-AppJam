@@ -16,7 +16,6 @@ public record UserNovelGetResponse(
         ReadStatus userNovelReadStatus,
         String userNovelReadStartDate,
         String userNovelReadEndDate,
-        List<String> keywords,
         List<PlatformGetResponse> platforms
 ) {
 }
