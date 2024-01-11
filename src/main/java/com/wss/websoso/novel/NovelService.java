@@ -1,7 +1,6 @@
 package com.wss.websoso.novel;
 
 import com.wss.websoso.platform.PlatformGetResponse;
-import com.wss.websoso.platform.PlatformRepository;
 import com.wss.websoso.user.User;
 import com.wss.websoso.user.UserRepository;
 import com.wss.websoso.userNovel.UserNovel;
@@ -23,7 +22,6 @@ public class NovelService {
     private final NovelRepository novelRepository;
     private final UserRepository userRepository;
     private final UserNovelRepository userNovelRepository;
-    private final PlatformRepository platformRepository;
 
     public List<NovelGetResponse> getNovelsByWord(Long lastNovelId, int size, String word) {
         PageRequest pageRequest = PageRequest.of(DEFAULT_PAGE_NUMBER, size);
