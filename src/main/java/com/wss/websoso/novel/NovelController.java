@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,11 +22,11 @@ public class NovelController {
     word에 해당하는 소설이 없으면 빈 리스트를 반환한다.
      */
     @GetMapping
-    public List<NovelGetResponse> getNovelsByWord(
+    public ResponseEntity<NovelsGetResponse> getNovelsByWord(
             @RequestParam Long lastNovelId,
             @RequestParam int size,
             @RequestParam String word) {
-        return novelService.getNovelsByWord(lastNovelId, size, word);
+        return ResponseEntity.ok().body(novelService.getNovelsByWord(lastNovelId, size, word));
     }
 
     @GetMapping("{novelId}")

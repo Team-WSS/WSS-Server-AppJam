@@ -23,10 +23,10 @@ public class NovelService {
     private final UserRepository userRepository;
     private final UserNovelRepository userNovelRepository;
 
-    public List<NovelGetResponse> getNovelsByWord(Long lastNovelId, int size, String word) {
+    public NovelsGetResponse getNovelsByWord(Long lastNovelId, int size, String word) {
         PageRequest pageRequest = PageRequest.of(DEFAULT_PAGE_NUMBER, size);
-        Slice<Novel> entitySlice = novelRepository.findByIdLessThanOrderByIdDesc(lastNovelId, pageRequest, word);
-        return entitySlice.getContent().stream()
+        Slice<Novel> entitySlice = novelRepository.findByIdLessThanOrderByIdDesc(lastNovelId, pageRequest, word.replaceAll(" ", ""));
+        return new NovelsGetResponse(entitySlice.getContent().stream()
                 .map(novel -> new NovelGetResponse(
                         novel.getNovelId(),
                         novel.getNovelTitle(),
@@ -34,7 +34,7 @@ public class NovelService {
                         novel.getNovelGenre(),
                         novel.getNovelImg()
                 ))
-                .toList();
+                .toList());
     }
 
     public ResponseEntity<?> getNovelByNovelId(Long novelId, Long userId) {
