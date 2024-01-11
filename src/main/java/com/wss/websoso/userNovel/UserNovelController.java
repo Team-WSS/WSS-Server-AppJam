@@ -38,7 +38,7 @@ public class UserNovelController {
     }
 
     @GetMapping
-    public UserNovelsResponse getUserNovels(
+    public ResponseEntity<UserNovelsResponse> getUserNovels(
             @RequestParam String readStatus,
             @RequestParam Long lastUserNovelId,
             @RequestParam int size,
@@ -48,10 +48,14 @@ public class UserNovelController {
         Long userId = Long.valueOf(principal.getName());
 
         if (Objects.equals(readStatus, "ALL")) {
-            return userNovelService.getUserNovels(userId, lastUserNovelId, size, sortType);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(userNovelService.getUserNovels(userId, lastUserNovelId, size, sortType));
         } else {        // OLDEST
-            return userNovelService.getUserNovels(userId, ReadStatus.valueOf(readStatus),
-                    lastUserNovelId, size, sortType);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(userNovelService.getUserNovels(userId, ReadStatus.valueOf(readStatus),
+                            lastUserNovelId, size, sortType));
         }
     }
 
