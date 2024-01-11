@@ -35,4 +35,12 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<UserNovel> userNovels;
+
+    public int getMemoCount() {
+        int memoCount = 0;
+        for (UserNovel userNovel : getUserNovels()) {
+            memoCount += userNovel.getMemos().size();
+        }
+        return memoCount;
+    }
 }
