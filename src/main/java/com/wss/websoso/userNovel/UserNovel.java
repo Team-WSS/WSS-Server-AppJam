@@ -93,4 +93,14 @@ public class UserNovel {
         this.userNovelReadEndDate = userNovelReadEndDate;
         this.user = user;
     }
+
+    public void update(float userNovelRating,
+                       String userNovelReadStatus,
+                       String userNovelReadStartDate,
+                       String userNovelReadEndDate) {
+        this.userNovelRating = userNovelRating;
+        this.userNovelReadStatus = ReadStatus.valueOf(userNovelReadStatus);
+        this.userNovelReadStartDate = userNovelReadStartDate;
+        this.userNovelReadEndDate = userNovelReadEndDate;
+    }
 }
