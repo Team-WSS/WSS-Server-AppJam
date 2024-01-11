@@ -3,15 +3,20 @@ package com.wss.websoso.userNovel;
 import com.wss.websoso.config.ReadStatus;
 import com.wss.websoso.memo.Memo;
 import com.wss.websoso.memo.MemoRepository;
+import com.wss.websoso.novel.Novel;
+import com.wss.websoso.novel.NovelRepository;
 import com.wss.websoso.platform.Platform;
 import com.wss.websoso.platform.PlatformRepository;
-import java.util.List;
-import java.util.Objects;
+import com.wss.websoso.user.User;
+import com.wss.websoso.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +27,48 @@ public class UserNovelService {
     private final UserNovelRepository userNovelRepository;
     private final MemoRepository memoRepository;
     private final PlatformRepository platformRepository;
+    private final UserRepository userRepository;
+    private final NovelRepository novelRepository;
+
+    @Transactional
+    public Long createUserNovel(Long novelId, Long userId, UserNovelCreateRequest userNovelCreateRequest) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 사용자가 없습니다."));
+
+        Novel novel = novelRepository.findById(novelId)
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 작품이 없습니다."));
+
+        UserNovel userNovel = UserNovel.builder()
+                .novelId(novelId)
+                .userNovelTitle(novel.getNovelTitle())
+                .userNovelAuthor(novel.getNovelAuthor())
+                .userNovelGenre(novel.getNovelGenre())
+                .userNovelImg(novel.getNovelImg())
+                .userNovelDescription(novel.getNovelDescription())
+                .userNovelRating(userNovelCreateRequest.userNovelRating())
+                .userNovelReadStatus(ReadStatus.valueOf(userNovelCreateRequest.userNovelReadStatus()))
+                .userNovelReadStartDate(userNovelCreateRequest.userNovelReadStartDate())
+                .userNovelReadEndDate(userNovelCreateRequest.userNovelReadEndDate())
+                .user(user)
+                .build();
+
+        userNovelRepository.save(userNovel);
+
+        if (novel.getPlatforms() != null) {
+            novel.getPlatforms().stream()
+                    .forEach(platform -> {
+                        Platform newPlatform = Platform.builderWithUserNovel()
+                                .platformName(platform.getPlatformName())
+                                .platformUrl(platform.getPlatformUrl())
+                                .userNovel(userNovel)
+                                .buildWithUserNovel();
+
+                        platformRepository.save(newPlatform);
+                    });
+        }
+
+        return userNovel.getUserNovelId();
+    }
 
     // ALL
     public UserNovelsResponse getUserNovels(Long userId, Long lastUserNovelId, int size, String sortType) {
