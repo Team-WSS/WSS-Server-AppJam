@@ -1,6 +1,7 @@
 package com.wss.websoso.user;
 
 import com.wss.websoso.userAvatar.UserAvatar;
+import com.wss.websoso.userNovel.UserNovel;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,4 +32,7 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<UserAvatar> userAvatars;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<UserNovel> userNovels;
 }
