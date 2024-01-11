@@ -1,5 +1,7 @@
 package com.wss.websoso.userNovel;
 
+import static jakarta.persistence.EnumType.STRING;
+
 import com.wss.websoso.config.ReadStatus;
 import com.wss.websoso.memo.Memo;
 import com.wss.websoso.platform.Platform;
@@ -16,15 +18,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static jakarta.persistence.EnumType.STRING;
 
 @Entity
 @Getter
@@ -52,7 +51,7 @@ public class UserNovel {
     @Column(name = "user_novel_img", nullable = false)
     private String userNovelImg;
 
-    @Column(name = "user_novel_description", nullable = false)
+    @Column(name = "user_novel_description", columnDefinition = "text", nullable = false)
     private String userNovelDescription;
 
     @Column(name = "user_novel_rating", nullable = false)
@@ -93,5 +92,15 @@ public class UserNovel {
         this.userNovelReadStartDate = userNovelReadStartDate;
         this.userNovelReadEndDate = userNovelReadEndDate;
         this.user = user;
+    }
+
+    public void update(float userNovelRating,
+                       String userNovelReadStatus,
+                       String userNovelReadStartDate,
+                       String userNovelReadEndDate) {
+        this.userNovelRating = userNovelRating;
+        this.userNovelReadStatus = ReadStatus.valueOf(userNovelReadStatus);
+        this.userNovelReadStartDate = userNovelReadStartDate;
+        this.userNovelReadEndDate = userNovelReadEndDate;
     }
 }

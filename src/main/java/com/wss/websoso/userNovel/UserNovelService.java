@@ -166,4 +166,38 @@ public class UserNovelService {
 
         return new sosoPicksGetResponse(sosoPicks);
     }
+
+    @Transactional
+    public void deleteUserNovel(Long userId, Long userNovelId) {
+
+        UserNovel userNovelForAuthorization = userNovelRepository.findById(userNovelId)
+                .orElseThrow(() -> new RuntimeException("해당하는 userNovel이 없습니다."));
+
+        Long userIdForAuthorization = userNovelForAuthorization.getUser().getUserId();
+        if (!Objects.equals(userIdForAuthorization, userId)) {
+            throw new RuntimeException("잘못된 접근입니다.(인가X)");
+        }
+
+        UserNovel userNovel = userNovelRepository.findByUserNovelId(userNovelId);
+
+        userNovelRepository.delete(userNovel);
+    }
+
+    @Transactional
+    public void updateUserNovel(Long userId, Long userNovelId, UserNovelUpdateRequest userNovelUpdateRequest) {
+        UserNovel userNovelForAuthorization = userNovelRepository.findById(userNovelId)
+                .orElseThrow(() -> new RuntimeException("해당하는 userNovel이 없습니다."));
+
+        Long userIdForAuthorization = userNovelForAuthorization.getUser().getUserId();
+        if (!Objects.equals(userIdForAuthorization, userId)) {
+            throw new RuntimeException("잘못된 접근입니다.(인가X)");
+        }
+
+        UserNovel userNovel = userNovelRepository.findByUserNovelId(userNovelId);
+        userNovel.update(
+                userNovelUpdateRequest.userNovelRating(),
+                userNovelUpdateRequest.userNovelReadStatus(),
+                userNovelUpdateRequest.userNovelReadStartDate(),
+                userNovelUpdateRequest.userNovelReadEndDate());
+    }
 }
