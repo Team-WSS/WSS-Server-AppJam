@@ -23,4 +23,22 @@ public class UserService {
 
         return jwtProvider.generateToken(userAuthentication);
     }
+
+    @Transactional
+    public UserNicknameUpdateResponse updateNickname(Long userId, String newUserNickname) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 사용자가 없습니다."));
+
+        if (newUserNickname.equals(user.getUserNickname())) {
+            throw new IllegalArgumentException("이전 닉네임과 동일합니다.");
+        }
+
+        user.updateUserNickname(newUserNickname);
+
+        UserAuthentication userAuthentication = new UserAuthentication(user.getUserId(), null, null);
+        String token = jwtProvider.generateToken(userAuthentication);
+        String userNickname = user.getUserNickname();
+
+        return UserNicknameUpdateResponse.of(userNickname, token);
+    }
 }
