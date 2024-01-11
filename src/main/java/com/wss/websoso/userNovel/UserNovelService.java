@@ -130,4 +130,20 @@ public class UserNovelService {
 
         return UserNovelMemoAndInfoGetResponse.of(memos, userNovel, platforms, genreBadge);
     }
+
+    @Transactional
+    public void deleteUserNovel(Long userId, Long userNovelId) {
+
+        UserNovel userNovelForAuthorization = userNovelRepository.findById(userNovelId)
+                .orElseThrow(() -> new RuntimeException("해당하는 userNovel이 없습니다."));
+
+        Long userIdForAuthorization = userNovelForAuthorization.getUser().getUserId();
+        if (!Objects.equals(userIdForAuthorization, userId)) {
+            throw new RuntimeException("잘못된 접근입니다.(인가X)");
+        }
+
+        UserNovel userNovel = userNovelRepository.findByUserNovelId(userNovelId);
+
+        userNovelRepository.delete(userNovel);
+    }
 }
