@@ -12,9 +12,8 @@ public record UserNovelsResponse(
                 .map(userNovel -> new UserNovelResponse(
                         userNovel.getUserNovelId(),
                         userNovel.getUserNovelTitle(),
-                        userNovel.getUserNovelAuthor(),
-                        userNovel.getUserNovelGenre(),
                         userNovel.getUserNovelImg(),
+                        userNovel.getUserNovelAuthor(),
                         userNovel.getUserNovelRating()
                 )).toList();
 
