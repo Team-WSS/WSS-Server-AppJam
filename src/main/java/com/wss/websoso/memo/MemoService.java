@@ -5,13 +5,14 @@ import com.wss.websoso.user.UserRepository;
 import com.wss.websoso.userNovel.UserNovel;
 import com.wss.websoso.userNovel.UserNovelRepository;
 import jakarta.persistence.EntityNotFoundException;
-import java.util.List;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -59,6 +60,17 @@ public class MemoService {
             List<Memo> memos = entitySlice.getContent();
             return MemosGetResponse.of(memoCount, memos);
         }
+    }
+
+    public MemoDetailGetResponse getMemo(Long memoId, Long userId) {
+        Memo memo = memoRepository.findById(memoId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 메모입니다."));
+
+        if (memo.getUserNovel().getUser().getUserId() != userId) {
+            throw new IllegalArgumentException("사용자의 메모가 아닙니다.");
+        }
+
+        return MemoDetailGetResponse.of(memo);
     }
 
     @Transactional

@@ -1,8 +1,5 @@
 package com.wss.websoso.memo;
 
-import java.net.URI;
-import java.security.Principal;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.net.URI;
+import java.security.Principal;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/memos")
@@ -55,6 +56,14 @@ public class MemoController {
             @RequestParam String sortType,
             Principal principal) {
         return memoService.getMemos(Long.valueOf(principal.getName()), lastMemoId, size, sortType);
+    }
+
+    @GetMapping("{memoId}")
+    public ResponseEntity<MemoDetailGetResponse> getMemo(@PathVariable Long memoId, Principal principal) {
+        Long userId = Long.valueOf(principal.getName());
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(memoService.getMemo(memoId, userId));
     }
 
     // 삭제
