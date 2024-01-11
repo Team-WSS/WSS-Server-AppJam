@@ -68,4 +68,11 @@ public class UserNovelController {
                 .status(HttpStatus.OK)
                 .body(userNovelService.getUserNovelMemoAndInfo(userId, userNovelId));
     }
+
+    @GetMapping("/soso-picks")
+    public ResponseEntity<sosoPicksGetResponse> getSosoPicks() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userNovelService.getSosoPicks());
+    }
 }
