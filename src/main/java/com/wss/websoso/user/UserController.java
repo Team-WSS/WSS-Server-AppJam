@@ -32,7 +32,7 @@ public class UserController {
     public ResponseEntity<?> updateNickname(Principal principal, @RequestBody UserNicknameUpdateRequest userNicknameUpdateRequest) {
         try {
             Long userId = Long.valueOf(principal.getName());
-            String newUserNickname = userNicknameUpdateRequest.newUserNickname();
+            String newUserNickname = userNicknameUpdateRequest.userNickname();
             return ResponseEntity.ok().body(userService.updateNickname(userId, newUserNickname));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
