@@ -54,7 +54,6 @@ public class UserService {
 
         List<Avatar> allAvatars = avatarRepository.findAll();
         List<Long> ownAvatarIdList = userAvatarRepository.findAvatarIdByUserId(userId);
-        System.out.println(ownAvatarIdList);
         List<UserAvatarsGetResponse> userAvatarList = new ArrayList<>();
         for (Avatar a : allAvatars) {
             if (ownAvatarIdList.contains(a.getAvatarId())) {
