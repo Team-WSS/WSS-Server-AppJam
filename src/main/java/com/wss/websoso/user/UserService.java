@@ -40,11 +40,11 @@ public class UserService {
 
     public UserInfoGetResponse getUserInfo(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("aa"));
+                .orElseThrow(() -> new RuntimeException("해당하는 사용자가 없습니다."));
 
         Long userRepresentativeAvatarId = user.getUserRepAvatarId();
         Avatar avatar = avatarRepository.findById(userRepresentativeAvatarId)
-                .orElseThrow(() -> new RuntimeException("aa"));
+                .orElseThrow(() -> new RuntimeException("해당하는 대표 아바타가 없습니다."));
 
         List<AvatarLine> avatarLines = avatarLineRepository.findByAvatarId(userRepresentativeAvatarId);
 
