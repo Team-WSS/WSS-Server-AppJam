@@ -38,7 +38,7 @@ public class Platform {
     private Novel novel;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_novel_id", nullable = false)
+    @JoinColumn(name = "user_novel_id")
     private UserNovel userNovel;
 
     @Builder
