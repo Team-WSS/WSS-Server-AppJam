@@ -30,10 +30,17 @@ public class User {
     @Column(name = "user_rep_avatar_id", nullable = false)
     private Long userRepAvatarId;
 
+    @Column(name = "user_written_memo_count", columnDefinition = "bigint default 0", nullable = false)
+    private Long userWrittenMemoCount;
+
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<UserAvatar> userAvatars;
 
     public void updateUserRepAvatar(Long avatarId) {
         this.userRepAvatarId = avatarId;
+    }
+
+    public void updateUserWrittenMemoCount() {
+        this.userWrittenMemoCount++;
     }
 }
