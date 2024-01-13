@@ -134,13 +134,13 @@ public class UserNovelService {
         return UserNovelMemoAndInfoGetResponse.of(memos, userNovel, platforms, genreBadge);
     }
 
-    public sosoPicksGetResponse getSosoPicks() {
+    public SosoPicksGetResponse getSosoPicks() {
         Long lastUserNovelId;
         try {
             lastUserNovelId = userNovelRepository.findByMaxUserNovelId()
                     .orElseThrow(() -> new RuntimeException("유저가 등록한 서재 작품이 없습니다."));
         } catch (Exception e) {
-            return new sosoPicksGetResponse(new ArrayList<>());
+            return new SosoPicksGetResponse(new ArrayList<>());
         }
         List<Novel> recentNovels = new ArrayList<>();
         int count = 0;
@@ -164,7 +164,7 @@ public class UserNovelService {
                 .map(novel -> sosoPickGetResponse.of(novel, userNovelRepository.countUserNovelsByNovelId(novel.getNovelId())))
                 .toList();
 
-        return new sosoPicksGetResponse(sosoPicks);
+        return new SosoPicksGetResponse(sosoPicks);
     }
 
     @Transactional
