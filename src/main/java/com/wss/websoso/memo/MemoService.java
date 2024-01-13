@@ -52,10 +52,7 @@ public class MemoService {
 
         user.updateUserWrittenMemoCount();
 
-        Boolean isAvatarUnlocked = false;
-        if (user.getUserWrittenMemoCount() == 1 || user.getUserWrittenMemoCount() == 10) {
-            isAvatarUnlocked = true;
-        }
+        boolean isAvatarUnlocked = user.getUserWrittenMemoCount() == 1 || user.getUserWrittenMemoCount() == 10;
 
         return MemoCreateResponse.of(isAvatarUnlocked);
     }
