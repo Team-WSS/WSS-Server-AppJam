@@ -1,4 +1,4 @@
-package com.wss.websoso.platform;
+package com.wss.websoso.platform.dto;
 
 public record PlatformGetResponse(
         String platformName,

@@ -1,4 +1,4 @@
-package com.wss.websoso.userNovel;
+package com.wss.websoso.userNovel.dto;
 
 import com.wss.websoso.novel.Novel;
 
@@ -9,6 +9,7 @@ public record SosoPickGetResponse(
         Long novelRegisteredCount
 ) {
     public static SosoPickGetResponse of(Novel novel, Long novelRegisteredCount) {
-        return new SosoPickGetResponse(novel.getNovelImg(), novel.getNovelTitle(), novel.getNovelAuthor(), novelRegisteredCount);
+        return new SosoPickGetResponse(novel.getNovelImg(), novel.getNovelTitle(), novel.getNovelAuthor(),
+                novelRegisteredCount);
     }
 }

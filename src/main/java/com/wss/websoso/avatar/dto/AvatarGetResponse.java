@@ -1,4 +1,6 @@
-package com.wss.websoso.avatar;
+package com.wss.websoso.avatar.dto;
+
+import com.wss.websoso.avatar.Avatar;
 
 public record AvatarGetResponse(
         String avatarTag,

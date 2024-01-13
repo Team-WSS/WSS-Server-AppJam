@@ -1,9 +1,14 @@
 package com.wss.websoso.userNovel;
 
 import com.wss.websoso.config.ReadStatus;
-import com.wss.websoso.memo.MemoCreateRequest;
-import com.wss.websoso.memo.MemoCreateResponse;
+import com.wss.websoso.memo.dto.MemoCreateRequest;
+import com.wss.websoso.memo.dto.MemoCreateResponse;
 import com.wss.websoso.memo.MemoService;
+import com.wss.websoso.userNovel.dto.SosoPicksGetResponse;
+import com.wss.websoso.userNovel.dto.UserNovelCreateRequest;
+import com.wss.websoso.userNovel.dto.UserNovelMemoAndInfoGetResponse;
+import com.wss.websoso.userNovel.dto.UserNovelUpdateRequest;
+import com.wss.websoso.userNovel.dto.UserNovelsResponse;
 import java.net.URI;
 import java.security.Principal;
 import java.util.Objects;

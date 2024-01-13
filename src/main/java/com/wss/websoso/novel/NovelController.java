@@ -1,5 +1,6 @@
 package com.wss.websoso.novel;
 
+import com.wss.websoso.novel.dto.NovelsGetResponse;
 import java.security.Principal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

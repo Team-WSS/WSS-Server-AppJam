@@ -1,6 +1,6 @@
-package com.wss.websoso.novel;
+package com.wss.websoso.novel.dto;
 
-import com.wss.websoso.platform.PlatformGetResponse;
+import com.wss.websoso.platform.dto.PlatformGetResponse;
 
 import java.util.List;
 

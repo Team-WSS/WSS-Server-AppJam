@@ -1,5 +1,6 @@
-package com.wss.websoso.memo;
+package com.wss.websoso.memo.dto;
 
+import com.wss.websoso.memo.Memo;
 import java.util.List;
 
 public record MemosGetResponse(

@@ -1,5 +1,10 @@
 package com.wss.websoso.memo;
 
+import com.wss.websoso.memo.dto.MemoCreateRequest;
+import com.wss.websoso.memo.dto.MemoCreateResponse;
+import com.wss.websoso.memo.dto.MemoDetailGetResponse;
+import com.wss.websoso.memo.dto.MemoUpdateRequest;
+import com.wss.websoso.memo.dto.MemosGetResponse;
 import com.wss.websoso.user.User;
 import com.wss.websoso.user.UserRepository;
 import com.wss.websoso.userNovel.UserNovel;

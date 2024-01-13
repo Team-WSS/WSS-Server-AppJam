@@ -1,9 +1,10 @@
-package com.wss.websoso.userNovel;
+package com.wss.websoso.userNovel.dto;
 
 import com.wss.websoso.config.ReadStatus;
 import com.wss.websoso.genreBadge.GenreBadge;
 import com.wss.websoso.memo.Memo;
 import com.wss.websoso.platform.Platform;
+import com.wss.websoso.userNovel.UserNovel;
 import java.util.List;
 
 public record UserNovelMemoAndInfoGetResponse(

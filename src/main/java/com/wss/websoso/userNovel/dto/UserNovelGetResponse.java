@@ -1,7 +1,7 @@
-package com.wss.websoso.userNovel;
+package com.wss.websoso.userNovel.dto;
 
 import com.wss.websoso.config.ReadStatus;
-import com.wss.websoso.platform.PlatformGetResponse;
+import com.wss.websoso.platform.dto.PlatformGetResponse;
 
 import java.util.List;
 

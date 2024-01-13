@@ -1,4 +1,4 @@
-package com.wss.websoso.userNovel;
+package com.wss.websoso.userNovel.dto;
 
 import java.util.List;
 

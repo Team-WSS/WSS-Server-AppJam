@@ -1,5 +1,7 @@
 package com.wss.websoso.avatar;
 
+import com.wss.websoso.avatar.dto.AvatarGetResponse;
+import com.wss.websoso.avatar.dto.UserRepAvatarGetResponse;
 import com.wss.websoso.avatarLine.AvatarLine;
 import com.wss.websoso.avatarLine.AvatarLineRepository;
 import com.wss.websoso.user.User;
@@ -37,7 +39,8 @@ public class AvatarService {
                 .orElseThrow(() -> new IllegalArgumentException("사용자가 해당 아바타를 가지고 있지 않습니다."));
 
         List<AvatarLine> avatarLines = avatarLineRepository.findByAvatar(avatar);
-        String randomAvatarLine = avatarLines.get((int) (System.currentTimeMillis() % TOTAL_AVATAR_LINES)).getAvatarLineContent();
+        String randomAvatarLine = avatarLines.get((int) (System.currentTimeMillis() % TOTAL_AVATAR_LINES))
+                .getAvatarLineContent();
 
         return UserRepAvatarGetResponse.of(avatar, randomAvatarLine, user.getUserNickname());
     }
@@ -68,7 +71,8 @@ public class AvatarService {
         Optional<UserAvatar> userAvatar = userAvatarRepository.findByUserAndAvatar(user, avatar);
 
         if (userAvatar.isEmpty()) {
-            return AvatarGetResponse.of(avatar, avatar.getAvatarUnacquiredMent(), avatar.getAvatarUnacquiredCondition());
+            return AvatarGetResponse.of(avatar, avatar.getAvatarUnacquiredMent(),
+                    avatar.getAvatarUnacquiredCondition());
         }
 
         return AvatarGetResponse.of(avatar, avatar.getAvatarAcquiredMent(), avatar.getAvatarAcquiredCondition());

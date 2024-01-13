@@ -1,10 +1,13 @@
 package com.wss.websoso.novel;
 
-import com.wss.websoso.platform.PlatformGetResponse;
+import com.wss.websoso.novel.dto.NovelDetailGetResponse;
+import com.wss.websoso.novel.dto.NovelGetResponse;
+import com.wss.websoso.novel.dto.NovelsGetResponse;
+import com.wss.websoso.platform.dto.PlatformGetResponse;
 import com.wss.websoso.user.User;
 import com.wss.websoso.user.UserRepository;
 import com.wss.websoso.userNovel.UserNovel;
-import com.wss.websoso.userNovel.UserNovelGetResponse;
+import com.wss.websoso.userNovel.dto.UserNovelGetResponse;
 import com.wss.websoso.userNovel.UserNovelRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;

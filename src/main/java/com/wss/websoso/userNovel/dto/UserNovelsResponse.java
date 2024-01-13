@@ -1,5 +1,6 @@
-package com.wss.websoso.userNovel;
+package com.wss.websoso.userNovel.dto;
 
+import com.wss.websoso.userNovel.UserNovel;
 import java.util.List;
 
 public record UserNovelsResponse(
