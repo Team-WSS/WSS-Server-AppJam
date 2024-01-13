@@ -15,7 +15,7 @@ public record UserInfoGetResponse(
         String userNickName,
         long userNovelCount,
         long memoCount,
-        List<UserAvatarsGetResponse> userAvatarList
+        List<UserAvatarsGetResponse> userAvatars
 ) {
     public static UserInfoGetResponse of(User user, Avatar avatar, long userNovelCount,
                                          AvatarLine avatarLine, long memoCount,

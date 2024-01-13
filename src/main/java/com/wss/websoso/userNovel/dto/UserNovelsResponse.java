@@ -5,7 +5,7 @@ import java.util.List;
 
 public record UserNovelsResponse(
         long userNovelCount,
-        List<UserNovelResponse> userNovelList
+        List<UserNovelResponse> userNovels
 ) {
 
     public static UserNovelsResponse of(long userNovelCount, List<UserNovel> userNovels) {

@@ -8,7 +8,7 @@ import com.wss.websoso.userNovel.UserNovel;
 import java.util.List;
 
 public record UserNovelMemoAndInfoGetResponse(
-        List<UserNovelMemosGetResponse> memoList,
+        List<UserNovelMemosGetResponse> memos,
         float userNovelRating,
         ReadStatus userNovelReadStatus,
         String userNovelReadStartDate,
@@ -16,7 +16,7 @@ public record UserNovelMemoAndInfoGetResponse(
         String userNovelDescription,
         String userNovelGenre,
         String userNovelGenreBadgeImg,
-        List<UserNovelPlatformsGetResponse> platformList
+        List<UserNovelPlatformsGetResponse> platforms
 ) {
 
     public static UserNovelMemoAndInfoGetResponse of(List<Memo> memos, UserNovel userNovel,
