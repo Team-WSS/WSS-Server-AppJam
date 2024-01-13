@@ -31,6 +31,10 @@ public class User {
     @Column(name = "user_nickname", length = 10, nullable = false)
     private String userNickname;
 
+    // 정규 표현식 적용 및 nullable 추가해야함
+    @Column(name = "user_email")
+    private String userEmail;
+
     @Column(name = "user_rep_avatar_id", nullable = false)
     private Long userRepAvatarId;
 
