@@ -35,9 +35,13 @@ public class UserController {
             Long userId = Long.valueOf(principal.getName());
             String newUserNickname = userNicknameUpdateRequest.userNickname();
             userService.updateNickname(userId, newUserNickname);
-            return ResponseEntity.status(HttpStatus.OK).build();
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .build();
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(e.getMessage());
         }
     }
 }
