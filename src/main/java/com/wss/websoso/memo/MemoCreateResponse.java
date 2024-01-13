@@ -1,11 +1,11 @@
 package com.wss.websoso.memo;
 
 public record MemoCreateResponse(
-        Boolean avatarUnlocked
+        Boolean isAvatarUnlocked
 ) {
-    public static MemoCreateResponse of(Boolean avatarUnlocked) {
+    public static MemoCreateResponse of(Boolean isAvatarUnlocked) {
         return new MemoCreateResponse(
-                avatarUnlocked
+                isAvatarUnlocked
         );
     }
 }

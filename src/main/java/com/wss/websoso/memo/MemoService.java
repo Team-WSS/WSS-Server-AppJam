@@ -47,12 +47,12 @@ public class MemoService {
 
         user.updateUserWrittenMemoCount();
 
-        Boolean avatarUnlocked = false;
+        Boolean isAvatarUnlocked = false;
         if (user.getUserWrittenMemoCount() == 1 || user.getUserWrittenMemoCount() == 10) {
-            avatarUnlocked = true;
+            isAvatarUnlocked = true;
         }
 
-        return MemoCreateResponse.of(avatarUnlocked);
+        return MemoCreateResponse.of(isAvatarUnlocked);
     }
 
     public MemosGetResponse getMemos(Long userId, Long lastMemoId, int size, String sortType) {
