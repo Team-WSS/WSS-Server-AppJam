@@ -1,6 +1,9 @@
 package com.wss.websoso.userNovel;
 
 import com.wss.websoso.config.ReadStatus;
+import com.wss.websoso.memo.MemoCreateRequest;
+import com.wss.websoso.memo.MemoCreateResponse;
+import com.wss.websoso.memo.MemoService;
 import java.net.URI;
 import java.security.Principal;
 import java.util.Objects;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserNovelController {
 
     private final UserNovelService userNovelService;
+    private final MemoService memoService;
 
     @PostMapping("/{novelId}")
     public ResponseEntity<Void> createUserNovel(
@@ -37,6 +41,17 @@ public class UserNovelController {
 
         return ResponseEntity.created(location).build();
     }
+
+    @PostMapping("/{userNovelId}/memo")
+    public ResponseEntity<MemoCreateResponse> createMemo(
+            @PathVariable Long userNovelId,
+            @RequestBody MemoCreateRequest request,
+            Principal principal
+    ) {
+        MemoCreateResponse response = memoService.create(Long.valueOf(principal.getName()), userNovelId, request);
+        return ResponseEntity.ok(response);
+    }
+
 
     @GetMapping
     public ResponseEntity<UserNovelsResponse> getUserNovels(
