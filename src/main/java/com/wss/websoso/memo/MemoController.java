@@ -23,7 +23,7 @@ public class MemoController {
     private final MemoService memoService;
 
     // 생성
-    @PostMapping("{userNovelId}")
+    @PostMapping("/{userNovelId}")
     public ResponseEntity<MemoCreateResponse> createMemo(
             @PathVariable Long userNovelId,
             @RequestBody MemoCreateRequest request,
@@ -43,7 +43,7 @@ public class MemoController {
         return memoService.getMemos(Long.valueOf(principal.getName()), lastMemoId, size, sortType);
     }
 
-    @GetMapping("{memoId}")
+    @GetMapping("/{memoId}")
     public ResponseEntity<MemoDetailGetResponse> getMemo(@PathVariable Long memoId, Principal principal) {
         Long userId = Long.valueOf(principal.getName());
         return ResponseEntity
@@ -52,7 +52,7 @@ public class MemoController {
     }
 
     // 삭제
-    @DeleteMapping("{memoId}")
+    @DeleteMapping("/{memoId}")
     public ResponseEntity deleteMemo(@PathVariable Long memoId, Principal principal) {
         try {
             memoService.deleteMemo(Long.valueOf(principal.getName()), memoId);
@@ -69,7 +69,7 @@ public class MemoController {
     }
 
     // 수정
-    @PatchMapping("{memoId}")
+    @PatchMapping("/{memoId}")
     public ResponseEntity<Map<String, String>> editMemo(
             @PathVariable Long memoId,
             @RequestBody MemoUpdateRequest request,
