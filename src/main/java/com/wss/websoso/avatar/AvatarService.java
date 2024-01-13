@@ -4,12 +4,14 @@ import com.wss.websoso.avatarLine.AvatarLine;
 import com.wss.websoso.avatarLine.AvatarLineRepository;
 import com.wss.websoso.user.User;
 import com.wss.websoso.user.UserRepository;
+import com.wss.websoso.userAvatar.UserAvatar;
 import com.wss.websoso.userAvatar.UserAvatarRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +23,7 @@ public class AvatarService {
     private final AvatarLineRepository avatarLineRepository;
     private final UserRepository userRepository;
     private final AvatarRepository avatarRepository;
-  
+
     public UserRepAvatarGetResponse getRepAvatar(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 사용자가 없습니다."));
@@ -55,5 +57,20 @@ public class AvatarService {
         }
 
         user.updateUserRepAvatar(avatarId);
+    }
+
+    public AvatarGetResponse getAvatar(Long userId, Long avatarId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 사용자가 없습니다."));
+        Avatar avatar = avatarRepository.findById(avatarId)
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 아바타가 없습니다."));
+
+        Optional<UserAvatar> userAvatar = userAvatarRepository.findByUserAndAvatar(user, avatar);
+
+        if (userAvatar.isEmpty()) {
+            return AvatarGetResponse.of(avatar, avatar.getAvatarUnacquiredMent(), avatar.getAvatarUnacquiredCondition());
+        }
+
+        return AvatarGetResponse.of(avatar, avatar.getAvatarAcquiredMent(), avatar.getAvatarAcquiredCondition());
     }
 }
