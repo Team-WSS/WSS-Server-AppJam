@@ -47,23 +47,16 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("해당하는 대표 아바타가 없습니다."));
 
         List<AvatarLine> avatarLines = avatarLineRepository.findByAvatarId(userRepresentativeAvatarId);
-
         long userNovelCount = userNovelRepository.countByUserId(userId);
 
         long memoCount = user.getMemoCount();
 
         List<Avatar> allAvatars = avatarRepository.findAll();
         List<Long> ownAvatarIdList = userAvatarRepository.findAvatarIdByUserId(userId);
-        List<UserAvatarsGetResponse> userAvatarList = new ArrayList<>();
-        for (Avatar a : allAvatars) {
-            if (ownAvatarIdList.contains(a.getAvatarId())) {
-                userAvatarList.add(
-                        new UserAvatarsGetResponse(a.getAvatarId(), a.getAvatarAcquiredImg()));
-            } else {
-                userAvatarList.add(
-                        new UserAvatarsGetResponse(a.getAvatarId(), a.getAvatarUnacquiredImg()));
-            }
-        }
+        List<UserAvatarsGetResponse> userAvatarList = new ArrayList<>(allAvatars.stream()
+                .map(eachAvatar -> new UserAvatarsGetResponse(eachAvatar.getAvatarId(),
+                        ownAvatarIdList.contains(eachAvatar.getAvatarId()) ?
+                                eachAvatar.getAvatarAcquiredImg() : eachAvatar.getAvatarUnacquiredImg())).toList());
 
         return UserInfoGetResponse.of(user, avatar, userNovelCount,
                 avatarLines.get((int) (System.currentTimeMillis() % TOTAL_AVATAR_LINES)), memoCount, userAvatarList);
