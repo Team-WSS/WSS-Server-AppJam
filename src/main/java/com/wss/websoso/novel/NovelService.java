@@ -11,11 +11,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class NovelService {
 
     public static final int DEFAULT_PAGE_NUMBER = 0;
@@ -25,7 +25,8 @@ public class NovelService {
 
     public NovelsGetResponse getNovelsByWord(Long lastNovelId, int size, String word) {
         PageRequest pageRequest = PageRequest.of(DEFAULT_PAGE_NUMBER, size);
-        Slice<Novel> entitySlice = novelRepository.findByIdLessThanOrderByIdDesc(lastNovelId, pageRequest, word.replaceAll(" ", ""));
+        Slice<Novel> entitySlice = novelRepository.findByIdLessThanOrderByIdDesc(lastNovelId, pageRequest,
+                word.replaceAll(" ", ""));
         return new NovelsGetResponse(entitySlice.getContent().stream()
                 .map(novel -> new NovelGetResponse(
                         novel.getNovelId(),
