@@ -9,12 +9,13 @@ import com.wss.websoso.config.jwt.UserAuthentication;
 import com.wss.websoso.userAvatar.UserAvatarRepository;
 import com.wss.websoso.userNovel.UserAvatarsGetResponse;
 import com.wss.websoso.userNovel.UserNovelRepository;
-import jakarta.security.auth.message.AuthException;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -29,13 +30,29 @@ public class UserService {
     private final AvatarLineRepository avatarLineRepository;
     private final UserAvatarRepository userAvatarRepository;
 
-    public String login(String userNickname) throws AuthException {
+    public UserLoginRequest login(String userNickname) {
         User user = userRepository.findByUserNickname(userNickname)
-                .orElseThrow(() -> new AuthException("해당하는 사용자가 없습니다."));
+                .orElseThrow(() -> new RuntimeException("해당하는 사용자가 없습니다."));
 
         UserAuthentication userAuthentication = new UserAuthentication(user.getUserId(), null, null);
 
-        return jwtProvider.generateToken(userAuthentication);
+        return UserLoginRequest.of(jwtProvider.generateToken(userAuthentication));
+    }
+
+    @Transactional
+    public void updateNickname(Long userId, String newUserNickname) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 사용자가 없습니다."));
+
+        if (Objects.equals(newUserNickname, user.getUserNickname())) {
+            throw new IllegalArgumentException("이전 닉네임과 동일합니다.");
+        }
+
+        if (newUserNickname == null || newUserNickname.isBlank()) {
+            throw new IllegalArgumentException("닉네임이 없습니다.");
+        }
+
+        user.updateUserNickname(newUserNickname);
     }
 
     public UserInfoGetResponse getUserInfo(Long userId) {

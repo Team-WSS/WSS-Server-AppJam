@@ -1,6 +1,5 @@
 package com.wss.websoso.memo;
 
-import com.wss.websoso.userNovel.UserNovel;
 import java.util.List;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
@@ -10,8 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MemoRepository extends JpaRepository<Memo, Long> {
-    List<Memo> findAllByUserNovelIn(List<UserNovel> userNovels);
-
     // NEWEST
     @Query(value = "SELECT m FROM Memo m WHERE "
             + "m.userNovel.user.userId = ?1 AND "
@@ -28,7 +25,7 @@ public interface MemoRepository extends JpaRepository<Memo, Long> {
     @Query(value = "SELECT COUNT(m) FROM Memo m WHERE "
             + "m.userNovel.user.userId = ?1")
     long countByUserId(Long userId);
-  
-  @Query(value = "SELECT m FROM Memo m WHERE m.userNovel.userNovelId = ?1")
+
+    @Query(value = "SELECT m FROM Memo m WHERE m.userNovel.userNovelId = ?1")
     List<Memo> findByUserNovelId(Long userNovelId);
 }
