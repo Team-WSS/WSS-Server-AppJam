@@ -2,6 +2,7 @@ package com.wss.websoso.user;
 
 import jakarta.security.auth.message.AuthException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +34,8 @@ public class UserController {
         try {
             Long userId = Long.valueOf(principal.getName());
             String newUserNickname = userNicknameUpdateRequest.userNickname();
-            return ResponseEntity.ok().body(userService.updateNickname(userId, newUserNickname));
+            userService.updateNickname(userId, newUserNickname);
+            return ResponseEntity.status(HttpStatus.OK).build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
