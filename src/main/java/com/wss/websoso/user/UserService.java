@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -21,5 +23,21 @@ public class UserService {
         UserAuthentication userAuthentication = new UserAuthentication(user.getUserId(), null, null);
 
         return UserLoginRequest.of(jwtProvider.generateToken(userAuthentication));
+    }
+
+    @Transactional
+    public void updateNickname(Long userId, String newUserNickname) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 사용자가 없습니다."));
+
+        if (Objects.equals(newUserNickname, user.getUserNickname())) {
+            throw new IllegalArgumentException("이전 닉네임과 동일합니다.");
+        }
+
+        if (newUserNickname == null || newUserNickname.isBlank()) {
+            throw new IllegalArgumentException("닉네임이 없습니다.");
+        }
+
+        user.updateUserNickname(newUserNickname);
     }
 }

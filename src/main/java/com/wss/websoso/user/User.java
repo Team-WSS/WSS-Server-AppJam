@@ -24,7 +24,7 @@ public class User {
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
-    @Column(name = "user_nickname", nullable = false)
+    @Column(name = "user_nickname", length = 10, nullable = false)
     private String userNickname;
 
     @Column(name = "user_rep_avatar_id", nullable = false)
@@ -36,6 +36,10 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<UserAvatar> userAvatars;
 
+    public void updateUserNickname(String newUserNickname) {
+        this.userNickname = newUserNickname;
+    }
+  
     public void updateUserRepAvatar(Long avatarId) {
         this.userRepAvatarId = avatarId;
     }
