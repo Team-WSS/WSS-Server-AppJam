@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 
@@ -31,10 +32,10 @@ public class User {
     private Long userRepAvatarId;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<UserAvatar> userAvatars;
+    private List<UserAvatar> userAvatars = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<UserNovel> userNovels;
+    private List<UserNovel> userNovels = new ArrayList<>();
 
     public int getMemoCount() {
         int memoCount = 0;
