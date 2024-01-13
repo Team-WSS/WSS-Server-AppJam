@@ -10,8 +10,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.util.List;
 import lombok.Getter;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -34,6 +35,10 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<UserAvatar> userAvatars;
+
+    public void updateUserRepAvatar(Long avatarId) {
+        this.userRepAvatarId = avatarId;
+    }
 
     public void updateUserWrittenMemoCount() {
         this.userWrittenMemoCount++;
