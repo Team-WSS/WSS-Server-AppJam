@@ -5,14 +5,13 @@ import com.wss.websoso.user.UserRepository;
 import com.wss.websoso.userNovel.UserNovel;
 import com.wss.websoso.userNovel.UserNovelRepository;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +25,7 @@ public class MemoService {
     private final UserNovelRepository userNovelRepository;
 
     @Transactional
-    public String create(Long userId, Long userNovelId, MemoCreateRequest request) {
+    public MemoCreateResponse create(Long userId, Long userNovelId, MemoCreateRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 사용자가 없습니다."));
 
@@ -41,11 +40,19 @@ public class MemoService {
             throw new IllegalArgumentException("memoContent의 최대 길이를 초과했습니다.");
         }
 
-        Memo memo = memoRepository.save(Memo.builder()
+        memoRepository.save(Memo.builder()
                 .memoContent(request.memoContent())
                 .userNovel(userNovel)
                 .build());
-        return memo.getMemoId().toString();
+
+        user.updateUserWrittenMemoCount();
+
+        Boolean isAvatarUnlocked = false;
+        if (user.getUserWrittenMemoCount() == 1 || user.getUserWrittenMemoCount() == 10) {
+            isAvatarUnlocked = true;
+        }
+
+        return MemoCreateResponse.of(isAvatarUnlocked);
     }
 
     public MemosGetResponse getMemos(Long userId, Long lastMemoId, int size, String sortType) {
