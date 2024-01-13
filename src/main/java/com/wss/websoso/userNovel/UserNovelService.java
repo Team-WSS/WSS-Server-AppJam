@@ -159,8 +159,8 @@ public class UserNovelService {
             lastUserNovelId--;
         }
 
-        List<sosoPickGetResponse> sosoPicks = recentNovels.stream()
-                .map(novel -> sosoPickGetResponse.of(novel,
+        List<SosoPickGetResponse> sosoPicks = recentNovels.stream()
+                .map(novel -> SosoPickGetResponse.of(novel,
                         userNovelRepository.countUserNovelsByNovelId(novel.getNovelId())))
                 .toList();
 
