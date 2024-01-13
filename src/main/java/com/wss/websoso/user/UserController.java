@@ -1,5 +1,6 @@
 package com.wss.websoso.user;
 
+import java.security.Principal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,7 +27,8 @@ public class UserController {
     }
 
     @PatchMapping("/nickname")
-    public ResponseEntity<?> updateNickname(Principal principal, @RequestBody UserNicknameUpdateRequest userNicknameUpdateRequest) {
+    public ResponseEntity<?> updateNickname(Principal principal,
+                                            @RequestBody UserNicknameUpdateRequest userNicknameUpdateRequest) {
         try {
             Long userId = Long.valueOf(principal.getName());
             String newUserNickname = userNicknameUpdateRequest.userNickname();
@@ -43,7 +43,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/user-info")
+    @GetMapping("/info")
     public ResponseEntity<UserInfoGetResponse> getUserInfo(Principal principal) {
         Long userId = Long.valueOf(principal.getName());
 
