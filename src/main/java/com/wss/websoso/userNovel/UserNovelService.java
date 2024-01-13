@@ -11,16 +11,15 @@ import com.wss.websoso.platform.Platform;
 import com.wss.websoso.platform.PlatformRepository;
 import com.wss.websoso.user.User;
 import com.wss.websoso.user.UserRepository;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -161,7 +160,8 @@ public class UserNovelService {
         }
 
         List<sosoPickGetResponse> sosoPicks = recentNovels.stream()
-                .map(novel -> sosoPickGetResponse.of(novel, userNovelRepository.countUserNovelsByNovelId(novel.getNovelId())))
+                .map(novel -> sosoPickGetResponse.of(novel,
+                        userNovelRepository.countUserNovelsByNovelId(novel.getNovelId())))
                 .toList();
 
         return new SosoPicksGetResponse(sosoPicks);

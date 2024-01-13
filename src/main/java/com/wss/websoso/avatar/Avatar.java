@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 
@@ -49,8 +50,8 @@ public class Avatar {
     private String avatarUnacquiredCondition;
 
     @OneToMany(mappedBy = "avatar", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<AvatarLine> avatarLines;
+    private List<AvatarLine> avatarLines = new ArrayList<>();
 
     @OneToMany(mappedBy = "avatar", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<UserAvatar> userAvatars;
+    private List<UserAvatar> userAvatars = new ArrayList<>();
 }
