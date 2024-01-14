@@ -30,7 +30,7 @@ public class MemoService {
     private final UserNovelRepository userNovelRepository;
 
     @Transactional
-    public MemoCreateResponse create(Long userId, Long userNovelId, MemoCreateRequest request) {
+    public MemoCreateResponse createMemo(Long userId, Long userNovelId, MemoCreateRequest memoCreateRequest) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 사용자가 없습니다."));
 
@@ -41,17 +41,16 @@ public class MemoService {
             throw new IllegalArgumentException("내 서재의 작품이 아닙니다.");
         }
 
-        if (request.memoContent().length() > 2000) {
+        if (memoCreateRequest.memoContent().length() > 2000) {
             throw new IllegalArgumentException("memoContent의 최대 길이를 초과했습니다.");
         }
 
         memoRepository.save(Memo.builder()
-                .memoContent(request.memoContent())
+                .memoContent(memoCreateRequest.memoContent())
                 .userNovel(userNovel)
                 .build());
 
         user.updateUserWrittenMemoCount();
-
         boolean isAvatarUnlocked = user.getUserWrittenMemoCount() == 1 || user.getUserWrittenMemoCount() == 10;
 
         return MemoCreateResponse.of(isAvatarUnlocked);
