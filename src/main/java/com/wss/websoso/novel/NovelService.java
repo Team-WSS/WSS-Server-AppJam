@@ -7,8 +7,8 @@ import com.wss.websoso.platform.dto.PlatformGetResponse;
 import com.wss.websoso.user.User;
 import com.wss.websoso.user.UserRepository;
 import com.wss.websoso.userNovel.UserNovel;
-import com.wss.websoso.userNovel.dto.UserNovelGetResponse;
 import com.wss.websoso.userNovel.UserNovelRepository;
+import com.wss.websoso.userNovel.dto.UserNovelGetResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class NovelService {
 
-    public static final int DEFAULT_PAGE_NUMBER = 0;
+    private static final int DEFAULT_PAGE_NUMBER = 0;
     private final NovelRepository novelRepository;
     private final UserRepository userRepository;
     private final UserNovelRepository userNovelRepository;

@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class MemoService {
 
-    public static final int DEFAULT_PAGE_NUMBER = 0;
+    private static final int DEFAULT_PAGE_NUMBER = 0;
 
     private final MemoRepository memoRepository;
     private final UserRepository userRepository;
