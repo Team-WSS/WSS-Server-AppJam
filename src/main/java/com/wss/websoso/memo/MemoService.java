@@ -7,6 +7,7 @@ import com.wss.websoso.memo.dto.MemoUpdateRequest;
 import com.wss.websoso.memo.dto.MemosGetResponse;
 import com.wss.websoso.user.User;
 import com.wss.websoso.user.UserRepository;
+import com.wss.websoso.userAvatar.UserAvatarRepository;
 import com.wss.websoso.userNovel.UserNovel;
 import com.wss.websoso.userNovel.UserNovelRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -28,6 +29,7 @@ public class MemoService {
     private final MemoRepository memoRepository;
     private final UserRepository userRepository;
     private final UserNovelRepository userNovelRepository;
+    private final UserAvatarRepository userAvatarRepository;
 
     @Transactional
     public MemoCreateResponse createMemo(Long userId, Long userNovelId, MemoCreateRequest memoCreateRequest) {
@@ -51,8 +53,14 @@ public class MemoService {
                 .build());
 
         user.updateUserWrittenMemoCount();
-        boolean isAvatarUnlocked = user.getUserWrittenMemoCount() == 1 || user.getUserWrittenMemoCount() == 10;
-
+        Long userWrittenMemoCount = user.getUserWrittenMemoCount();
+        if (userWrittenMemoCount == 1L) {
+            userAvatarRepository.createUserAvatar(userId, 2L);
+        }
+        if (userWrittenMemoCount == 10L) {
+            userAvatarRepository.createUserAvatar(userId, 3L);
+        }
+        boolean isAvatarUnlocked = userWrittenMemoCount == 1L || userWrittenMemoCount == 10L;
         return MemoCreateResponse.of(isAvatarUnlocked);
     }
 
