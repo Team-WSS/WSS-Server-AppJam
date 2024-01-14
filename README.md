@@ -33,6 +33,13 @@ _**쉽게 기록하고, 재밌게 기억하고, 마음껏 몰입하기 위해.**
 <!-- 버전 명시 -->
 <img src="https://img.shields.io/badge/java 17-007396?style=for-the-badge&logo=java&logoColor=white"> <img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> <img src="https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white"> <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white">
 
+## 아키텍처
+<img width="811" alt="스크린샷 2024-01-14 22 52 20" src="https://github.com/Team-WSS/WSS-Server/assets/71974850/0e78e9f8-079c-457e-8477-9dc586e7afb8">
+
+## ERD
+<img width="1160" alt="스크린샷 2024-01-14 22 46 58" src="https://github.com/Team-WSS/WSS-Server/assets/71974850/915d549e-b65a-4a62-8092-8d16ef70ed88">
+
+
 </br>
 
 <!--
