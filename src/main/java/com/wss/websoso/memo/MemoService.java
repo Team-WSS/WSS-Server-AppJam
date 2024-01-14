@@ -25,6 +25,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemoService {
 
     private static final int DEFAULT_PAGE_NUMBER = 0;
+    private static final long SECOND_AVATAR_UNLOCK_CONDITION_MEMO_COUNT = 1L;
+    private static final long THIRD_AVATAR_UNLOCK_CONDITION_MEMO_COUNT = 10L;
+    private static final long SECOND_AVATAR_ID = 2L;
+    private static final long THIRD_AVATAR_ID = 3L;
+    private static final long MAX_MEMO_CONTENT_LENGTH = 2000L;
 
     private final MemoRepository memoRepository;
     private final UserRepository userRepository;
@@ -43,7 +48,7 @@ public class MemoService {
             throw new IllegalArgumentException("내 서재의 작품이 아닙니다.");
         }
 
-        if (memoCreateRequest.memoContent().length() > 2000) {
+        if (memoCreateRequest.memoContent().length() > MAX_MEMO_CONTENT_LENGTH) {
             throw new IllegalArgumentException("memoContent의 최대 길이를 초과했습니다.");
         }
 
@@ -54,13 +59,14 @@ public class MemoService {
 
         user.updateUserWrittenMemoCount();
         Long userWrittenMemoCount = user.getUserWrittenMemoCount();
-        if (userWrittenMemoCount == 1L) {
-            userAvatarRepository.createUserAvatar(userId, 2L);
+        if (userWrittenMemoCount == SECOND_AVATAR_UNLOCK_CONDITION_MEMO_COUNT) {
+            userAvatarRepository.createUserAvatar(userId, SECOND_AVATAR_ID);
         }
-        if (userWrittenMemoCount == 10L) {
-            userAvatarRepository.createUserAvatar(userId, 3L);
+        if (userWrittenMemoCount == THIRD_AVATAR_UNLOCK_CONDITION_MEMO_COUNT) {
+            userAvatarRepository.createUserAvatar(userId, THIRD_AVATAR_ID);
         }
-        boolean isAvatarUnlocked = userWrittenMemoCount == 1L || userWrittenMemoCount == 10L;
+        boolean isAvatarUnlocked = userWrittenMemoCount == SECOND_AVATAR_UNLOCK_CONDITION_MEMO_COUNT
+                || userWrittenMemoCount == THIRD_AVATAR_UNLOCK_CONDITION_MEMO_COUNT;
         return MemoCreateResponse.of(isAvatarUnlocked);
     }
 
@@ -115,7 +121,7 @@ public class MemoService {
             throw new IllegalArgumentException("사용자의 메모가 아닙니다.");
         }
 
-        if (request.memoContent().length() > 2000) {
+        if (request.memoContent().length() > MAX_MEMO_CONTENT_LENGTH) {
             throw new IllegalArgumentException("memoContent의 최대 길이를 초과했습니다.");
         }
 
