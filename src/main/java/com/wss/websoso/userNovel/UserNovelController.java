@@ -1,9 +1,9 @@
 package com.wss.websoso.userNovel;
 
 import com.wss.websoso.config.ReadStatus;
+import com.wss.websoso.memo.MemoService;
 import com.wss.websoso.memo.dto.MemoCreateRequest;
 import com.wss.websoso.memo.dto.MemoCreateResponse;
-import com.wss.websoso.memo.MemoService;
 import com.wss.websoso.userNovel.dto.SosoPicksGetResponse;
 import com.wss.websoso.userNovel.dto.UserNovelCreateRequest;
 import com.wss.websoso.userNovel.dto.UserNovelMemoAndInfoGetResponse;
@@ -50,11 +50,14 @@ public class UserNovelController {
     @PostMapping("/{userNovelId}/memo")
     public ResponseEntity<MemoCreateResponse> createMemo(
             @PathVariable Long userNovelId,
-            @RequestBody MemoCreateRequest request,
+            @RequestBody MemoCreateRequest memoCreateRequest,
             Principal principal
     ) {
-        MemoCreateResponse response = memoService.create(Long.valueOf(principal.getName()), userNovelId, request);
-        return ResponseEntity.ok(response);
+        Long userId = Long.valueOf(principal.getName());
+        MemoCreateResponse memoCreateResponse = memoService.createMemo(userId, userNovelId, memoCreateRequest);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(memoCreateResponse);
     }
 
 
