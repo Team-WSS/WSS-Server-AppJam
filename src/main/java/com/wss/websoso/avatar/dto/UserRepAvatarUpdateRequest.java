@@ -1,4 +1,4 @@
-package com.wss.websoso.avatar;
+package com.wss.websoso.avatar.dto;
 
 public record UserRepAvatarUpdateRequest(
         Long avatarId

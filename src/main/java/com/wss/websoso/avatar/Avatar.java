@@ -11,11 +11,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "avatar")
 public class Avatar {
 
@@ -49,8 +53,8 @@ public class Avatar {
     private String avatarUnacquiredCondition;
 
     @OneToMany(mappedBy = "avatar", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<AvatarLine> avatarLines;
+    private List<AvatarLine> avatarLines = new ArrayList<>();
 
     @OneToMany(mappedBy = "avatar", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<UserAvatar> userAvatars;
+    private List<UserAvatar> userAvatars = new ArrayList<>();
 }

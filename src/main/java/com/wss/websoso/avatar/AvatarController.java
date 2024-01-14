@@ -1,5 +1,8 @@
 package com.wss.websoso.avatar;
 
+import com.wss.websoso.avatar.dto.AvatarGetResponse;
+import com.wss.websoso.avatar.dto.UserRepAvatarGetResponse;
+import com.wss.websoso.avatar.dto.UserRepAvatarUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +29,8 @@ public class AvatarController {
     }
 
     @PatchMapping("/rep-avatar")
-    public ResponseEntity<Void> updateUserRepAvatar(@RequestBody UserRepAvatarUpdateRequest userRepAvatarUpdateRequest, Principal principal) {
+    public ResponseEntity<Void> updateUserRepAvatar(@RequestBody UserRepAvatarUpdateRequest userRepAvatarUpdateRequest,
+                                                    Principal principal) {
         Long userId = Long.valueOf(principal.getName());
         Long newRepAvatarId = userRepAvatarUpdateRequest.avatarId();
         avatarService.updateUserRepAvatar(userId, newRepAvatarId);

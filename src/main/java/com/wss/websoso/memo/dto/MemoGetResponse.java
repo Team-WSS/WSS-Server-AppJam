@@ -1,4 +1,4 @@
-package com.wss.websoso.memo;
+package com.wss.websoso.memo.dto;
 
 public record MemoGetResponse(
         Long memoId,

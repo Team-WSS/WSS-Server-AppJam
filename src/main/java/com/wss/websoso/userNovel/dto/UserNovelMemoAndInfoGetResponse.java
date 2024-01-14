@@ -1,13 +1,14 @@
-package com.wss.websoso.userNovel;
+package com.wss.websoso.userNovel.dto;
 
 import com.wss.websoso.config.ReadStatus;
 import com.wss.websoso.genreBadge.GenreBadge;
 import com.wss.websoso.memo.Memo;
 import com.wss.websoso.platform.Platform;
+import com.wss.websoso.userNovel.UserNovel;
 import java.util.List;
 
 public record UserNovelMemoAndInfoGetResponse(
-        List<UserNovelMemosGetResponse> memoList,
+        List<UserNovelMemosGetResponse> memos,
         float userNovelRating,
         ReadStatus userNovelReadStatus,
         String userNovelReadStartDate,
@@ -15,7 +16,7 @@ public record UserNovelMemoAndInfoGetResponse(
         String userNovelDescription,
         String userNovelGenre,
         String userNovelGenreBadgeImg,
-        List<UserNovelPlatformsGetResponse> platformList
+        List<UserNovelPlatformsGetResponse> platforms
 ) {
 
     public static UserNovelMemoAndInfoGetResponse of(List<Memo> memos, UserNovel userNovel,

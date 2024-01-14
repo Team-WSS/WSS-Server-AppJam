@@ -11,16 +11,21 @@ import com.wss.websoso.platform.Platform;
 import com.wss.websoso.platform.PlatformRepository;
 import com.wss.websoso.user.User;
 import com.wss.websoso.user.UserRepository;
+import com.wss.websoso.userNovel.dto.SosoPickGetResponse;
+import com.wss.websoso.userNovel.dto.SosoPicksGetResponse;
+import com.wss.websoso.userNovel.dto.UserNovelCreateRequest;
+import com.wss.websoso.userNovel.dto.UserNovelMemoAndInfoGetResponse;
+import com.wss.websoso.userNovel.dto.UserNovelUpdateRequest;
+import com.wss.websoso.userNovel.dto.UserNovelsResponse;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -160,8 +165,9 @@ public class UserNovelService {
             lastUserNovelId--;
         }
 
-        List<sosoPickGetResponse> sosoPicks = recentNovels.stream()
-                .map(novel -> sosoPickGetResponse.of(novel, userNovelRepository.countUserNovelsByNovelId(novel.getNovelId())))
+        List<SosoPickGetResponse> sosoPicks = recentNovels.stream()
+                .map(novel -> SosoPickGetResponse.of(novel,
+                        userNovelRepository.countUserNovelsByNovelId(novel.getNovelId())))
                 .toList();
 
         return new SosoPicksGetResponse(sosoPicks);

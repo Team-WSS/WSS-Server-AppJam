@@ -1,4 +1,4 @@
-package com.wss.websoso.novel;
+package com.wss.websoso.novel.dto;
 
 public record NovelGetResponse(
         Long novelId,

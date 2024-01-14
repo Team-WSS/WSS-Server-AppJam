@@ -1,6 +1,17 @@
 package com.wss.websoso.userNovel;
 
 import com.wss.websoso.config.ReadStatus;
+import com.wss.websoso.memo.dto.MemoCreateRequest;
+import com.wss.websoso.memo.dto.MemoCreateResponse;
+import com.wss.websoso.memo.MemoService;
+import com.wss.websoso.userNovel.dto.SosoPicksGetResponse;
+import com.wss.websoso.userNovel.dto.UserNovelCreateRequest;
+import com.wss.websoso.userNovel.dto.UserNovelMemoAndInfoGetResponse;
+import com.wss.websoso.userNovel.dto.UserNovelUpdateRequest;
+import com.wss.websoso.userNovel.dto.UserNovelsResponse;
+import java.net.URI;
+import java.security.Principal;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,18 +25,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URI;
-import java.security.Principal;
-import java.util.Objects;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user-novels")
 public class UserNovelController {
 
     private final UserNovelService userNovelService;
+    private final MemoService memoService;
 
-    @PostMapping("{novelId}")
+    @PostMapping("/{novelId}")
     public ResponseEntity<Void> createUserNovel(
             @PathVariable Long novelId,
             @RequestBody UserNovelCreateRequest userNovelCreateRequest,
@@ -38,6 +46,17 @@ public class UserNovelController {
 
         return ResponseEntity.created(location).build();
     }
+
+    @PostMapping("/{userNovelId}/memo")
+    public ResponseEntity<MemoCreateResponse> createMemo(
+            @PathVariable Long userNovelId,
+            @RequestBody MemoCreateRequest request,
+            Principal principal
+    ) {
+        MemoCreateResponse response = memoService.create(Long.valueOf(principal.getName()), userNovelId, request);
+        return ResponseEntity.ok(response);
+    }
+
 
     @GetMapping
     public ResponseEntity<UserNovelsResponse> getUserNovels(

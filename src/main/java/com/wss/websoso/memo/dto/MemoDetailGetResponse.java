@@ -1,4 +1,6 @@
-package com.wss.websoso.memo;
+package com.wss.websoso.memo.dto;
+
+import com.wss.websoso.memo.Memo;
 
 public record MemoDetailGetResponse(
         String userNovelTitle,
