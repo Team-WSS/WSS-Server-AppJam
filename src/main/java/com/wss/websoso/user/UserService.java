@@ -9,22 +9,21 @@ import com.wss.websoso.config.jwt.UserAuthentication;
 import com.wss.websoso.user.dto.UserInfoGetResponse;
 import com.wss.websoso.user.dto.UserLoginRequest;
 import com.wss.websoso.userAvatar.UserAvatarRepository;
-import com.wss.websoso.userNovel.dto.UserAvatarsGetResponse;
 import com.wss.websoso.userNovel.UserNovelRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import com.wss.websoso.userNovel.dto.UserAvatarsGetResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class UserService {
 
-    public static final int TOTAL_AVATAR_LINES = 10;
+    public static final int TOTAL_AVATAR_LINES = 5;
     private final JwtProvider jwtProvider;
     private final UserRepository userRepository;
     private final UserNovelRepository userNovelRepository;

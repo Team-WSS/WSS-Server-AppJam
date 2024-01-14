@@ -8,22 +8,21 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+import java.util.Date;
+import javax.crypto.SecretKey;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-
-import javax.crypto.SecretKey;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
 public class JwtProvider {
 
     private static final String USER_ID = "userId";
-    private static final Long TOKEN_EXPIRATION_TIME = 24 * 60 * 60 * 1000L; // 24시간
+    private static final Long TOKEN_EXPIRATION_TIME = 10 * 24 * 60 * 60 * 1000L; // 24시간
 //      private static final Long TOKEN_EXPIRATION_TIME = 60 * 1000L; // 1분
 
     @Value("${jwt.secret}")
@@ -53,7 +52,8 @@ public class JwtProvider {
 
     private SecretKey getSigningKey() {
         String encodedKey = Base64.getEncoder().encodeToString(JWT_SECRET.getBytes()); //SecretKey 통해 서명 생성
-        return Keys.hmacShaKeyFor(encodedKey.getBytes());   //일반적으로 HMAC (Hash-based Message Authentication Code) 알고리즘 사용
+        return Keys.hmacShaKeyFor(
+                encodedKey.getBytes());   //일반적으로 HMAC (Hash-based Message Authentication Code) 알고리즘 사용
     }
 
     public JwtValidationType validateToken(String token) {

@@ -8,19 +8,18 @@ import com.wss.websoso.user.User;
 import com.wss.websoso.user.UserRepository;
 import com.wss.websoso.userAvatar.UserAvatar;
 import com.wss.websoso.userAvatar.UserAvatarRepository;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class AvatarService {
 
-    private static final int TOTAL_AVATAR_LINES = 10;
+    private static final int TOTAL_AVATAR_LINES = 5;
     private final UserAvatarRepository userAvatarRepository;
     private final AvatarLineRepository avatarLineRepository;
     private final UserRepository userRepository;
