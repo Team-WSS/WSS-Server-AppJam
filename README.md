@@ -37,7 +37,8 @@ _**쉽게 기록하고, 재밌게 기억하고, 마음껏 몰입하기 위해.**
 <img width="811" alt="스크린샷 2024-01-14 22 52 20" src="https://github.com/Team-WSS/WSS-Server/assets/71974850/0e78e9f8-079c-457e-8477-9dc586e7afb8">
 
 ## ERD
-<img width="1160" alt="스크린샷 2024-01-14 22 46 58" src="https://github.com/Team-WSS/WSS-Server/assets/71974850/915d549e-b65a-4a62-8092-8d16ef70ed88">
+![wss_erd](https://github.com/Team-WSS/WSS-Server/assets/71974850/df1e351b-f09d-4f2e-99fe-6046d2b09dbb)
+
 
 
 </br>
