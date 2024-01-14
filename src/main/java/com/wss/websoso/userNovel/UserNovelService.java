@@ -17,15 +17,16 @@ import com.wss.websoso.userNovel.dto.UserNovelCreateRequest;
 import com.wss.websoso.userNovel.dto.UserNovelMemoAndInfoGetResponse;
 import com.wss.websoso.userNovel.dto.UserNovelUpdateRequest;
 import com.wss.websoso.userNovel.dto.UserNovelsResponse;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -131,7 +132,7 @@ public class UserNovelService {
             throw new RuntimeException("잘못된 접근입니다.(인가X)");
         }
 
-        List<Memo> memos = memoRepository.findByUserNovelId(userNovelId);
+        List<Memo> memos = memoRepository.findByUserNovelIdDesc(userNovelId);
         List<Platform> platforms = platformRepository.findByUserNovelId(userNovelId);
         UserNovel userNovel = userNovelRepository.findByUserNovelId(userNovelId);
         GenreBadge genreBadge = genreBadgeRepository.findByGenreBadgeName(userNovel.getUserNovelGenre());
