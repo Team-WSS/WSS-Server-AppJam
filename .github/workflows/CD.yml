@@ -59,6 +59,5 @@ jobs:
         username: ${{ secrets.RELEASE_SERVER_USER }}
         key: ${{ secrets.RELEASE_SERVER_KEY }}
         script: |
-          docker rm -f websoso-image
-          docker image pull websoso/websoso-image
-          docker run -d --name do-sopt-seminar-8080 -p 8080:8080 websoso/websoso-image
+          cd ~
+          ./deploy.sh
