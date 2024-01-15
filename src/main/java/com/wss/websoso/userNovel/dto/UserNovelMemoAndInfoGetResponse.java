@@ -5,11 +5,15 @@ import com.wss.websoso.genreBadge.GenreBadge;
 import com.wss.websoso.memo.Memo;
 import com.wss.websoso.platform.Platform;
 import com.wss.websoso.userNovel.UserNovel;
+
 import java.util.List;
 
 public record UserNovelMemoAndInfoGetResponse(
         List<UserNovelMemosGetResponse> memos,
         float userNovelRating,
+        String userNovelTitle,
+        String userNovelImg,
+        String userNovelAuthor,
         ReadStatus userNovelReadStatus,
         String userNovelReadStartDate,
         String userNovelReadEndDate,
@@ -37,6 +41,9 @@ public record UserNovelMemoAndInfoGetResponse(
         return new UserNovelMemoAndInfoGetResponse(
                 memoList,
                 userNovel.getUserNovelRating(),
+                userNovel.getUserNovelTitle(),
+                userNovel.getUserNovelImg(),
+                userNovel.getUserNovelAuthor(),
                 userNovel.getUserNovelReadStatus(),
                 userNovel.getUserNovelReadStartDate(),
                 userNovel.getUserNovelReadEndDate(),
