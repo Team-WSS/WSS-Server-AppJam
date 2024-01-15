@@ -51,11 +51,17 @@ public class NovelService {
                     .orElseThrow(() -> new IllegalArgumentException("해당하는 등록된 작품이 없습니다."));
 
             return new NovelDetailGetResponse(
+                    null,
                     userNovel.getUserNovelId(),
+                    null,
                     userNovel.getUserNovelTitle(),
+                    null,
                     userNovel.getUserNovelAuthor(),
+                    null,
                     userNovel.getUserNovelGenre(),
+                    null,
                     userNovel.getUserNovelImg(),
+                    null,
                     userNovel.getUserNovelDescription(),
                     userNovel.getUserNovelRating(),
                     userNovel.getUserNovelReadStatus(),
@@ -71,11 +77,17 @@ public class NovelService {
         } catch (IllegalArgumentException e) {
             return new NovelDetailGetResponse(
                     novel.getNovelId(),
+                    null,
                     novel.getNovelTitle(),
+                    null,
                     novel.getNovelAuthor(),
+                    null,
                     novel.getNovelGenre(),
+                    null,
                     novel.getNovelImg(),
+                    null,
                     novel.getNovelDescription(),
+                    null,
                     null,
                     null,
                     null,
