@@ -20,11 +20,14 @@ public record UserInfoGetResponse(
     public static UserInfoGetResponse of(User user, Avatar avatar, long userNovelCount,
                                          AvatarLine avatarLine, long memoCount,
                                          List<UserAvatarsGetResponse> avatars) {
+        String userNickname = user.getUserNickname();
+        String customUserLine = avatarLine.getAvatarLineContent().replaceAll("%s", userNickname);
+
         return new UserInfoGetResponse(
                 user.getUserRepAvatarId(),
                 avatar.getAvatarGenreBadgeImg(),
                 avatar.getAvatarTag(),
-                avatarLine.getAvatarLineContent(),
+                customUserLine,
                 avatar.getAvatarAcquiredImg(),
                 user.getUserNickname(),
                 userNovelCount,
