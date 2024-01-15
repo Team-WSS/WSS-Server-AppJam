@@ -10,7 +10,7 @@ public record UserRepAvatarGetResponse(
     public static UserRepAvatarGetResponse of(Avatar avatar, String avatarLine, String userNickname) {
         return new UserRepAvatarGetResponse(
                 avatar.getAvatarTag(),
-                avatarLine,
+                avatarLine.replaceAll("%s", userNickname),
                 userNickname
         );
     }
