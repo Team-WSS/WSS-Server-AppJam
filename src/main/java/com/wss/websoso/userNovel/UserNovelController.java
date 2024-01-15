@@ -12,6 +12,7 @@ import com.wss.websoso.userNovel.dto.UserNovelsResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,7 @@ import java.net.URI;
 import java.security.Principal;
 import java.util.Objects;
 
+@SecurityRequirement(name = "Bearer Authentication")
 @Tag(name = "서재 작품 API", description = "서재 작품 관련 API")
 @RestController
 @RequiredArgsConstructor

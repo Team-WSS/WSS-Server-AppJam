@@ -5,6 +5,7 @@ import com.wss.websoso.avatar.dto.UserRepAvatarGetResponse;
 import com.wss.websoso.avatar.dto.UserRepAvatarUpdateRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 
+@SecurityRequirement(name = "Bearer Authentication")
 @Tag(name = "아바타 API", description = "아바타 관련 API")
 @RestController
 @RequiredArgsConstructor

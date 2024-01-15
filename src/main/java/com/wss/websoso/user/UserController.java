@@ -5,6 +5,7 @@ import com.wss.websoso.user.dto.UserLoginRequest;
 import com.wss.websoso.user.dto.UserNicknameUpdateRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 
+@SecurityRequirement(name = "Bearer Authentication")
 @Tag(name = "유저 API", description = "유저 관련 API")
 @RestController
 @RequiredArgsConstructor
