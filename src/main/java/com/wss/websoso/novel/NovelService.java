@@ -8,11 +8,9 @@ import com.wss.websoso.user.User;
 import com.wss.websoso.user.UserRepository;
 import com.wss.websoso.userNovel.UserNovel;
 import com.wss.websoso.userNovel.UserNovelRepository;
-import com.wss.websoso.userNovel.dto.UserNovelGetResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +39,7 @@ public class NovelService {
                 .toList());
     }
 
-    public ResponseEntity<?> getNovelByNovelId(Long novelId, Long userId) {
+    public NovelDetailGetResponse getNovelByNovelId(Long novelId, Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 사용자가 없습니다."));
 
@@ -52,7 +50,7 @@ public class NovelService {
             UserNovel userNovel = userNovelRepository.findByUserAndNovelId(user, novelId)
                     .orElseThrow(() -> new IllegalArgumentException("해당하는 등록된 작품이 없습니다."));
 
-            return ResponseEntity.ok(new UserNovelGetResponse(
+            return new NovelDetailGetResponse(
                     userNovel.getUserNovelId(),
                     userNovel.getUserNovelTitle(),
                     userNovel.getUserNovelAuthor(),
@@ -69,22 +67,26 @@ public class NovelService {
                                     platform.getPlatformUrl()
                             ))
                             .toList()
-            ));
+            );
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.ok(new NovelDetailGetResponse(
+            return new NovelDetailGetResponse(
                     novel.getNovelId(),
                     novel.getNovelTitle(),
                     novel.getNovelAuthor(),
                     novel.getNovelGenre(),
                     novel.getNovelImg(),
                     novel.getNovelDescription(),
+                    null,
+                    null,
+                    null,
+                    null,
                     novel.getPlatforms().stream()
                             .map(platform -> new PlatformGetResponse(
                                     platform.getPlatformName(),
                                     platform.getPlatformUrl()
                             ))
                             .toList()
-            ));
+            );
         }
     }
 }

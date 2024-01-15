@@ -1,14 +1,17 @@
 package com.wss.websoso.novel;
 
+import com.wss.websoso.novel.dto.NovelDetailGetResponse;
 import com.wss.websoso.novel.dto.NovelsGetResponse;
-import java.security.Principal;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,7 +33,10 @@ public class NovelController {
     }
 
     @GetMapping("/{novelId}")
-    public ResponseEntity getNovelByNovelId(@PathVariable Long novelId, Principal principal) {
-        return novelService.getNovelByNovelId(novelId, Long.valueOf(principal.getName()));
+    public ResponseEntity<NovelDetailGetResponse> getNovelByNovelId(@PathVariable Long novelId, Principal principal) {
+        Long userId = Long.valueOf(principal.getName());
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(novelService.getNovelByNovelId(novelId, userId));
     }
 }
