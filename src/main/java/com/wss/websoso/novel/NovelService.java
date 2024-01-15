@@ -50,7 +50,7 @@ public class NovelService {
             UserNovel userNovel = userNovelRepository.findByUserAndNovelId(user, novelId)
                     .orElseThrow(() -> new IllegalArgumentException("해당하는 등록된 작품이 없습니다."));
 
-            return new NovelDetailGetResponse(
+            NovelDetailGetResponse novelDetailGetResponse = new NovelDetailGetResponse(
                     null,
                     userNovel.getUserNovelId(),
                     null,
@@ -65,8 +65,6 @@ public class NovelService {
                     userNovel.getUserNovelDescription(),
                     userNovel.getUserNovelRating(),
                     userNovel.getUserNovelReadStatus(),
-                    userNovel.getUserNovelReadStartDate(),
-                    userNovel.getUserNovelReadEndDate(),
                     userNovel.getPlatforms().stream()
                             .map(platform -> new PlatformGetResponse(
                                     platform.getPlatformName(),
@@ -74,6 +72,8 @@ public class NovelService {
                             ))
                             .toList()
             );
+            novelDetailGetResponse.setUserNovelReadEndDate(userNovel.getUserNovelReadStartDate(), userNovel.getUserNovelReadEndDate());
+            return novelDetailGetResponse;
         } catch (IllegalArgumentException e) {
             return new NovelDetailGetResponse(
                     novel.getNovelId(),
@@ -87,8 +87,6 @@ public class NovelService {
                     novel.getNovelImg(),
                     null,
                     novel.getNovelDescription(),
-                    null,
-                    null,
                     null,
                     null,
                     null,
