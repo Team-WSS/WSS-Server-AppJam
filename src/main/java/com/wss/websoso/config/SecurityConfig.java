@@ -31,7 +31,8 @@ public class SecurityConfig {
              */
         http.csrf(AbstractHttpConfigurer::disable) // csrf 공격을 대비하기 위한 csrf 토큰 disable 하기
                 .formLogin(AbstractHttpConfigurer::disable) // form login 비활성화 jwt를 사용하고 있으므로 폼 기반 로그인은 필요하지 않다.
-                .httpBasic(AbstractHttpConfigurer::disable)// http 기본 인증은 사용자 이름과 비밀번호를 평문으로 전송하기 때문에 보안적으로 취약, 기본 인증을 비활성화 하고 있음
+                .httpBasic(
+                        AbstractHttpConfigurer::disable)// http 기본 인증은 사용자 이름과 비밀번호를 평문으로 전송하기 때문에 보안적으로 취약, 기본 인증을 비활성화 하고 있음
                 .sessionManagement(session -> {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 }) // session은 사용하지 않으므로 세션 관리를 STATELESS로 설정
@@ -46,7 +47,9 @@ public class SecurityConfig {
             로그인 API 요청은 인증 인가 없이도 요청이 가능하도록 설정
              */
         http.authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/users/login/**", "/swagger-ui/**", "/api-docs/**").permitAll();
+
+                    auth.requestMatchers("/users/login/**", "/swagger-ui/**", "/api-docs/**", "/actuator/health").permitAll();
+
                     auth.anyRequest().authenticated();
                 })
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

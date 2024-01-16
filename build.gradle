@@ -22,15 +22,27 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // spring boot
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'com.mysql:mysql-connector-j'
-    annotationProcessor 'org.projectlombok:lombok'
+
+    //spring data jpa
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // oauth for social login
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    // security for auth
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // mysql
+    runtimeOnly 'com.mysql:mysql-connector-j'
 
     // jwt
     implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
@@ -39,8 +51,13 @@ dependencies {
 
     // swagger
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+
+    // actuator
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+

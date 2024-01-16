@@ -50,17 +50,21 @@ public class NovelService {
             UserNovel userNovel = userNovelRepository.findByUserAndNovelId(user, novelId)
                     .orElseThrow(() -> new IllegalArgumentException("해당하는 등록된 작품이 없습니다."));
 
-            return new NovelDetailGetResponse(
+            NovelDetailGetResponse novelDetailGetResponse = new NovelDetailGetResponse(
+                    null,
                     userNovel.getUserNovelId(),
+                    null,
                     userNovel.getUserNovelTitle(),
+                    null,
                     userNovel.getUserNovelAuthor(),
+                    null,
                     userNovel.getUserNovelGenre(),
+                    null,
                     userNovel.getUserNovelImg(),
+                    null,
                     userNovel.getUserNovelDescription(),
                     userNovel.getUserNovelRating(),
                     userNovel.getUserNovelReadStatus(),
-                    userNovel.getUserNovelReadStartDate(),
-                    userNovel.getUserNovelReadEndDate(),
                     userNovel.getPlatforms().stream()
                             .map(platform -> new PlatformGetResponse(
                                     platform.getPlatformName(),
@@ -68,15 +72,21 @@ public class NovelService {
                             ))
                             .toList()
             );
+            novelDetailGetResponse.setUserNovelReadEndDate(userNovel.getUserNovelReadStartDate(), userNovel.getUserNovelReadEndDate());
+            return novelDetailGetResponse;
         } catch (IllegalArgumentException e) {
             return new NovelDetailGetResponse(
                     novel.getNovelId(),
-                    novel.getNovelTitle(),
-                    novel.getNovelAuthor(),
-                    novel.getNovelGenre(),
-                    novel.getNovelImg(),
-                    novel.getNovelDescription(),
                     null,
+                    novel.getNovelTitle(),
+                    null,
+                    novel.getNovelAuthor(),
+                    null,
+                    novel.getNovelGenre(),
+                    null,
+                    novel.getNovelImg(),
+                    null,
+                    novel.getNovelDescription(),
                     null,
                     null,
                     null,

@@ -11,9 +11,9 @@ import com.wss.websoso.user.dto.UserLoginRequest;
 import com.wss.websoso.userAvatar.UserAvatarRepository;
 import com.wss.websoso.userNovel.UserNovelRepository;
 import com.wss.websoso.userNovel.dto.UserAvatarsGetResponse;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,10 +71,13 @@ public class UserService {
 
         List<Avatar> allAvatars = avatarRepository.findAll();
         List<Long> ownAvatarIdList = userAvatarRepository.findAvatarIdByUserId(userId);
-        List<UserAvatarsGetResponse> userAvatarList = new ArrayList<>(allAvatars.stream()
-                .map(eachAvatar -> new UserAvatarsGetResponse(eachAvatar.getAvatarId(),
-                        ownAvatarIdList.contains(eachAvatar.getAvatarId()) ?
-                                eachAvatar.getAvatarAcquiredImg() : eachAvatar.getAvatarUnacquiredImg())).toList());
+        List<UserAvatarsGetResponse> userAvatarList = allAvatars.stream()
+                .map(eachAvatar -> {
+                    boolean hasAvatar = ownAvatarIdList.contains(eachAvatar.getAvatarId());
+                    return new UserAvatarsGetResponse(eachAvatar.getAvatarId(),
+                            hasAvatar ? eachAvatar.getAvatarAcquiredImg() : eachAvatar.getAvatarUnacquiredImg(),
+                            hasAvatar);
+                }).collect(Collectors.toList());
 
         return UserInfoGetResponse.of(user, avatar, userNovelCount,
                 avatarLines.get((int) (System.currentTimeMillis() % TOTAL_AVATAR_LINES)), memoCount, userAvatarList);
