@@ -9,9 +9,11 @@ import com.wss.websoso.userNovel.dto.UserNovelCreateRequest;
 import com.wss.websoso.userNovel.dto.UserNovelMemoAndInfoGetResponse;
 import com.wss.websoso.userNovel.dto.UserNovelUpdateRequest;
 import com.wss.websoso.userNovel.dto.UserNovelsResponse;
-import java.net.URI;
-import java.security.Principal;
-import java.util.Objects;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
+import java.security.Principal;
+import java.util.Objects;
+
+@SecurityRequirement(name = "Bearer Authentication")
+@Tag(name = "서재 작품 API", description = "서재 작품 관련 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user-novels")
@@ -33,6 +41,11 @@ public class UserNovelController {
     private final UserNovelService userNovelService;
     private final MemoService memoService;
 
+    @Operation(summary = "작품 등록", description = "작품을 내 서재에 등록한다.")
+    @Parameters({
+            @Parameter(name = "novelId", description = "등록할 작품 ID", required = true),
+            @Parameter(name = "userNovelCreateRequest", description = "서재에 등록할 정보", required = true)
+    })
     @PostMapping("/{novelId}")
     public ResponseEntity<Void> createUserNovel(
             @PathVariable Long novelId,
@@ -47,6 +60,11 @@ public class UserNovelController {
         return ResponseEntity.created(location).build();
     }
 
+    @Operation(summary = "메모 생성", description = "서재 작품에 메모를 생성한다.")
+    @Parameters({
+            @Parameter(name = "userNovelId", description = "서재 작품 ID", required = true),
+            @Parameter(name = "memoCreateRequest", description = "생성할 메모 내용", required = true)
+    })
     @PostMapping("/{userNovelId}/memo")
     public ResponseEntity<MemoCreateResponse> createMemo(
             @PathVariable Long userNovelId,
@@ -60,14 +78,21 @@ public class UserNovelController {
                 .body(memoCreateResponse);
     }
 
-
+    @Operation(summary = "서재 작품 조회", description = "서재 작품 전체를 조회한다.")
+    @Parameters({
+            @Parameter(name = "readStatus", description = "읽은 상태", required = true),
+            @Parameter(name = "lastUserNovelId", description = "마지막 서재 작품 ID (최신순:9999, 오래된순:0)", required = true),
+            @Parameter(name = "size", description = "한 번 호출로 서재 작품 개수", required = true),
+            @Parameter(name = "sortType", description = "NEWEST(최신순) | OLDEST(오래된순)", required = true)
+    })
     @GetMapping
     public ResponseEntity<UserNovelsResponse> getUserNovels(
             @RequestParam String readStatus,
             @RequestParam Long lastUserNovelId,
             @RequestParam int size,
             @RequestParam String sortType,
-            Principal principal) {
+            Principal principal
+    ) {
 
         Long userId = Long.valueOf(principal.getName());
 
@@ -83,6 +108,8 @@ public class UserNovelController {
         }
     }
 
+    @Operation(summary = "서재 작품 메모&정보 조회", description = "서재 작품의 메모와 정보를 조회한다.")
+    @Parameter(name = "userNovelId", description = "조회할 서재 작품 ID", required = true)
     @GetMapping("/{userNovelId}")
     public ResponseEntity<UserNovelMemoAndInfoGetResponse> getUserNovelMemoAndInfo(@PathVariable Long userNovelId,
                                                                                    Principal principal) {
@@ -93,6 +120,7 @@ public class UserNovelController {
                 .body(userNovelService.getUserNovelMemoAndInfo(userId, userNovelId));
     }
 
+    @Operation(summary = "소소's pick 조회", description = "유저가 등록한 작품의 정보를 최신순으로 10개 조회한다. (중복X)")
     @GetMapping("/soso-picks")
     public ResponseEntity<SosoPicksGetResponse> getSosoPicks() {
         return ResponseEntity
@@ -100,6 +128,8 @@ public class UserNovelController {
                 .body(userNovelService.getSosoPicks());
     }
 
+    @Operation(summary = "서재 작품 삭제", description = "서재 작품을 삭제한다.")
+    @Parameter(name = "userNovelId", description = "삭제할 서재 작품 ID", required = true)
     @DeleteMapping("/{userNovelId}")
     public ResponseEntity<Void> deleteUserNovel(@PathVariable Long userNovelId,
                                                 Principal principal) {
@@ -112,6 +142,11 @@ public class UserNovelController {
                 .build();
     }
 
+    @Operation(summary = "서재 작품 정보 변경", description = "서재 작품의 정보를 변경한다.")
+    @Parameters({
+            @Parameter(name = "userNovelId", description = "삭제할 서재 작품 ID", required = true),
+            @Parameter(name = "userNovelUpdateRequest", description = "변경할 서재 작품 정보", required = true)
+    })
     @PatchMapping("/{userNovelId}")
     public ResponseEntity<Void> updateUserNovel(@PathVariable Long userNovelId,
                                                 @RequestBody UserNovelUpdateRequest userNovelUpdateRequest,
