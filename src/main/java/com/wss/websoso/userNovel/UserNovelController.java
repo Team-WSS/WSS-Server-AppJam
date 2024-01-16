@@ -14,6 +14,10 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.net.URI;
+import java.security.Principal;
+import java.util.Map;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +30,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.net.URI;
-import java.security.Principal;
-import java.util.Objects;
 
 @SecurityRequirement(name = "Bearer Authentication")
 @Tag(name = "서재 작품 API", description = "서재 작품 관련 API")
@@ -47,17 +47,15 @@ public class UserNovelController {
             @Parameter(name = "userNovelCreateRequest", description = "서재에 등록할 정보", required = true)
     })
     @PostMapping("/{novelId}")
-    public ResponseEntity<Void> createUserNovel(
+    public ResponseEntity<Map<String, Long>> createUserNovel(
             @PathVariable Long novelId,
             @RequestBody UserNovelCreateRequest userNovelCreateRequest,
             Principal principal) {
-        URI location = URI.create("/userNovels/" + userNovelService.createUserNovel(
-                novelId,
-                Long.valueOf(principal.getName()),
-                userNovelCreateRequest)
-        );
+        Long userId = Long.valueOf(principal.getName());
+        Long userNovelId = userNovelService.createUserNovel(novelId, userId, userNovelCreateRequest);
+        URI location = URI.create("/userNovels/" + userNovelId);
 
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.created(location).body(Map.of("userNovelId", userNovelId));
     }
 
     @Operation(summary = "메모 생성", description = "서재 작품에 메모를 생성한다.")
