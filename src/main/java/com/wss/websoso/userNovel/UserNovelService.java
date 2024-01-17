@@ -49,6 +49,10 @@ public class UserNovelService {
         Novel novel = novelRepository.findById(novelId)
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 작품이 없습니다."));
 
+        if (userNovelRepository.findByUserAndNovelId(user, novelId).isPresent()) {
+            throw new RuntimeException("이미 등록되어 있는 작품입니다.");
+        }
+
         UserNovel userNovel = UserNovel.builder()
                 .novelId(novelId)
                 .userNovelTitle(novel.getNovelTitle())
