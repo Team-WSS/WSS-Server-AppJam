@@ -36,7 +36,7 @@ public class AvatarController {
     }
 
     @Operation(summary = "대표 캐릭터 변경", description = "유저의 대표 아바타를 변경한다.")
-    @Parameter(name = "userRepAvatarUpdateRequest", description = "변경할 대표 아바타 ID", required = true)
+    @Parameter(name = "userRepAvatarUpdateRequest", description = "변경할 대표 아바타 ID")
     @PatchMapping("/rep-avatar")
     public ResponseEntity<Void> updateUserRepAvatar(@RequestBody UserRepAvatarUpdateRequest userRepAvatarUpdateRequest,
                                                     Principal principal) {
