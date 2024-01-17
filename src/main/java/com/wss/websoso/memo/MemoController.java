@@ -5,7 +5,6 @@ import com.wss.websoso.memo.dto.MemoUpdateRequest;
 import com.wss.websoso.memo.dto.MemosGetResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -75,10 +74,7 @@ public class MemoController {
 
     // 수정
     @Operation(summary = "메모 정보 수정", description = "메모의 정보를 수정한다.")
-    @Parameters({
-            @Parameter(name = "memoId", description = "수정할 메모 ID", required = true),
-            @Parameter(name = "request", description = "변경할 메모 내용", required = true)
-    })
+    @Parameter(name = "memoId", description = "수정할 메모 ID", required = true)
     @PatchMapping("/{memoId}")
     public ResponseEntity<Map<String, String>> editMemo(
             @PathVariable Long memoId,

@@ -39,7 +39,6 @@ public class UserController {
     }
 
     @Operation(summary = "닉네임 변경", description = "새로운 닉네임을 받아서 유저의 닉네임을 변경한다.")
-    @Parameter(name = "userNicknameUpdateRequest", description = "유저의 새로운 닉네임", required = true)
     @PatchMapping("/nickname")
     public ResponseEntity<?> updateNickname(Principal principal,
                                             @RequestBody UserNicknameUpdateRequest userNicknameUpdateRequest) {

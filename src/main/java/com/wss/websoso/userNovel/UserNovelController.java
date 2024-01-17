@@ -14,10 +14,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.net.URI;
-import java.security.Principal;
-import java.util.Map;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +27,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
+import java.security.Principal;
+import java.util.Map;
+import java.util.Objects;
+
 @SecurityRequirement(name = "Bearer Authentication")
 @Tag(name = "서재 작품 API", description = "서재 작품 관련 API")
 @RestController
@@ -42,10 +43,7 @@ public class UserNovelController {
     private final MemoService memoService;
 
     @Operation(summary = "작품 등록", description = "작품을 내 서재에 등록한다.")
-    @Parameters({
-            @Parameter(name = "novelId", description = "등록할 작품 ID", required = true),
-            @Parameter(name = "userNovelCreateRequest", description = "서재에 등록할 정보", required = true)
-    })
+    @Parameter(name = "novelId", description = "등록할 작품 ID", required = true)
     @PostMapping("/{novelId}")
     public ResponseEntity<Map<String, Long>> createUserNovel(
             @PathVariable Long novelId,
@@ -59,10 +57,7 @@ public class UserNovelController {
     }
 
     @Operation(summary = "메모 생성", description = "서재 작품에 메모를 생성한다.")
-    @Parameters({
-            @Parameter(name = "userNovelId", description = "서재 작품 ID", required = true),
-            @Parameter(name = "memoCreateRequest", description = "생성할 메모 내용", required = true)
-    })
+    @Parameter(name = "userNovelId", description = "서재 작품 ID", required = true)
     @PostMapping("/{userNovelId}/memo")
     public ResponseEntity<MemoCreateResponse> createMemo(
             @PathVariable Long userNovelId,
@@ -141,10 +136,7 @@ public class UserNovelController {
     }
 
     @Operation(summary = "서재 작품 정보 변경", description = "서재 작품의 정보를 변경한다.")
-    @Parameters({
-            @Parameter(name = "userNovelId", description = "삭제할 서재 작품 ID", required = true),
-            @Parameter(name = "userNovelUpdateRequest", description = "변경할 서재 작품 정보", required = true)
-    })
+    @Parameter(name = "userNovelId", description = "삭제할 서재 작품 ID", required = true)
     @PatchMapping("/{userNovelId}")
     public ResponseEntity<Void> updateUserNovel(@PathVariable Long userNovelId,
                                                 @RequestBody UserNovelUpdateRequest userNovelUpdateRequest,
