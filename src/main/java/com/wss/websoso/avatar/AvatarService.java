@@ -8,11 +8,12 @@ import com.wss.websoso.user.User;
 import com.wss.websoso.user.UserRepository;
 import com.wss.websoso.userAvatar.UserAvatar;
 import com.wss.websoso.userAvatar.UserAvatarRepository;
-import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -70,10 +71,9 @@ public class AvatarService {
         Optional<UserAvatar> userAvatar = userAvatarRepository.findByUserAndAvatar(user, avatar);
 
         if (userAvatar.isEmpty()) {
-            return AvatarGetResponse.of(avatar, avatar.getAvatarUnacquiredMent(),
-                    avatar.getAvatarUnacquiredCondition());
+            return AvatarGetResponse.of(avatar, false);
         }
 
-        return AvatarGetResponse.of(avatar, avatar.getAvatarAcquiredMent(), avatar.getAvatarAcquiredCondition());
+        return AvatarGetResponse.of(avatar, true);
     }
 }
