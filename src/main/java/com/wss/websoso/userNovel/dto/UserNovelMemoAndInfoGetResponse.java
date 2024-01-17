@@ -10,6 +10,7 @@ import java.util.List;
 
 public record UserNovelMemoAndInfoGetResponse(
         List<UserNovelMemosGetResponse> memos,
+        Long novelId,
         float userNovelRating,
         String userNovelTitle,
         String userNovelImg,
@@ -40,6 +41,7 @@ public record UserNovelMemoAndInfoGetResponse(
 
         return new UserNovelMemoAndInfoGetResponse(
                 memoList,
+                userNovel.getNovelId(),
                 userNovel.getUserNovelRating(),
                 userNovel.getUserNovelTitle(),
                 userNovel.getUserNovelImg(),
