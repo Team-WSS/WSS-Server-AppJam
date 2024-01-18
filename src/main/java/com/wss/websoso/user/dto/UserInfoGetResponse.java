@@ -12,7 +12,7 @@ public record UserInfoGetResponse(
         String representativeAvatarTag,
         String representativeAvatarLineContent,
         String representativeAvatarImg,
-        String userNickName,
+        String userNickname,
         long userNovelCount,
         long memoCount,
         List<UserAvatarsGetResponse> userAvatars

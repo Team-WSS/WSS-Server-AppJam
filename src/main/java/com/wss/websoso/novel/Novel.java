@@ -36,7 +36,7 @@ public class Novel {
     @Column(name = "novel_genre", nullable = false)
     private String novelGenre;
 
-    @Column(name = "novel_img", nullable = false)
+    @Column(name = "novel_img", columnDefinition = "text", nullable = false)
     private String novelImg;
 
     @Column(name = "novel_description", columnDefinition = "text", nullable = false)

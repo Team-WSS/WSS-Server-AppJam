@@ -53,7 +53,7 @@ public class UserService {
             throw new IllegalArgumentException("닉네임이 없습니다.");
         }
 
-        user.updateUserNickname(newUserNickname);
+        user.updateUserNickname(newUserNickname.strip());
     }
 
     public UserInfoGetResponse getUserInfo(Long userId) {
