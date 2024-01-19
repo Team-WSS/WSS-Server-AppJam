@@ -32,10 +32,10 @@ public class UserController {
     @Operation(summary = "로그인", description = "유저의 닉네임을 받아서 로그인 처리를 한다.")
     @Parameter(name = "userNickname", description = "유저의 닉네임", required = true)
     @PostMapping("/login")
-    public ResponseEntity<UserLoginRequest> login(@RequestParam String userNickname) {
+    public ResponseEntity<UserLoginRequest> login(@RequestParam Long userId) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(userService.login(userNickname));
+                .body(userService.login(userId));
     }
 
     @Operation(summary = "닉네임 변경", description = "새로운 닉네임을 받아서 유저의 닉네임을 변경한다.")

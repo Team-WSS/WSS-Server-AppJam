@@ -11,12 +11,13 @@ import com.wss.websoso.user.dto.UserLoginRequest;
 import com.wss.websoso.userAvatar.UserAvatarRepository;
 import com.wss.websoso.userNovel.UserNovelRepository;
 import com.wss.websoso.userNovel.dto.UserAvatarsGetResponse;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,8 +32,8 @@ public class UserService {
     private final AvatarLineRepository avatarLineRepository;
     private final UserAvatarRepository userAvatarRepository;
 
-    public UserLoginRequest login(String userNickname) {
-        User user = userRepository.findByUserNickname(userNickname)
+    public UserLoginRequest login(Long userId) {
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("해당하는 사용자가 없습니다."));
 
         UserAuthentication userAuthentication = new UserAuthentication(user.getUserId(), null, null);
