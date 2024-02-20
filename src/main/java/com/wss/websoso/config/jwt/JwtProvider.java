@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 public class JwtProvider {
 
     private static final String USER_ID = "userId";
-    private static final Long TOKEN_EXPIRATION_TIME = 10 * 24 * 60 * 60 * 1000L; // 24시간
+    private static final Long TOKEN_EXPIRATION_TIME = 6 * 30 * 24 * 60 * 60 * 1000L; // 6개월
 //      private static final Long TOKEN_EXPIRATION_TIME = 60 * 1000L; // 1분
 
     @Value("${jwt.secret}")
